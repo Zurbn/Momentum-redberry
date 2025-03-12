@@ -1,0 +1,27 @@
+@use "./constants";
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
+
+@font-face {
+  font-family: "firaGO";
+  src: url("/fonts/FiraGO-Book.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "firaGO";
+}
+
+.momentum-header-heading {
+  color: constants.$momentum-color-primary;
+  font-weight: 600;
+  line-height: 2.375rem;
+  font-size: 1.9375rem;
+  font-family: "Fredoka One", cursive;
+}
+.momentum-body-1 {
+  color: constants.$momentum-color-dark-primary;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.1875rem;
+}

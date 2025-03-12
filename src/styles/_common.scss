@@ -1,0 +1,19 @@
+@use "./constants";
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.momentum-button {
+  padding: 10px 20px;
+  letter-spacing: 0.72px;
+  border-radius: 0.3125rem;
+
+  &--primary {
+    background-color: constants.$momentum-color-primary;
+    color: constants.$momentum-color-light;
+  }
+  &--secondary {
+    border: 0.0625rem solid constants.$momentum-color-primary;
+  }
+}
