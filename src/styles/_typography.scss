@@ -8,20 +8,16 @@
   font-style: normal;
 }
 
-body {
-  font-family: "firaGO";
-}
-
 .momentum-header-heading {
-  color: constants.$momentum-color-primary;
+  font-family: "Fredoka One", cursive;
+  font-size: 1.9375rem;
   font-weight: 600;
   line-height: 2.375rem;
-  font-size: 1.9375rem;
-  font-family: "Fredoka One", cursive;
+  color: constants.$momentum-color-primary;
 }
 .momentum-body-1 {
-  color: constants.$momentum-color-dark-primary;
-  font-weight: 400;
   font-size: 1rem;
+  font-weight: 400;
   line-height: 1.1875rem;
+  color: constants.$momentum-color-dark-primary;
 }
