@@ -1,0 +1,13 @@
+@use "/src/styles/constants";
+
+.tasks-container {
+  gap: 3.25rem;
+  margin-top: 5rem;
+}
+.task-progress {
+  height: 3.375rem;
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: constants.$momentum-color-light;
+  border-radius: 0.9375rem;
+}

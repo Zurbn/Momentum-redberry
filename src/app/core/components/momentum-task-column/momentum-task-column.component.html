@@ -1,0 +1,14 @@
+<div class="tasks-container d-flex">
+  <div *ngFor="let category of categories">
+    <div
+      [ngStyle]="{ 'background-color': category.color }"
+      class="task-progress d-flex align-items-center justify-content-center"
+    >
+      {{ category.name }}
+    </div>
+    <app-momentum-task-card
+      [momentumTaskCardData]="task"
+      *ngFor="let task of tasks"
+    ></app-momentum-task-card>
+  </div>
+</div>
