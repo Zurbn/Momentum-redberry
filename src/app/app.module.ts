@@ -7,6 +7,7 @@ import { MomentumDashboardPageComponent } from './pages/momentum-dashboard-page/
 import { MomentumDetailsPageComponent } from './pages/momentum-details-page/momentum-details-page.component';
 import { MomentumAddANewTaskComponent } from './pages/momentum-add-a-new-task/momentum-add-a-new-task.component';
 import { MomentumHeaderComponent } from './core/components/momentum-header/momentum-header.component';
+import { MomentumTaskColumnComponent } from './core/components/momentum-task-column/momentum-task-column.component';
 
 @NgModule({
   declarations: [
@@ -14,13 +15,10 @@ import { MomentumHeaderComponent } from './core/components/momentum-header/momen
     MomentumDashboardPageComponent,
     MomentumDetailsPageComponent,
     MomentumAddANewTaskComponent,
-    MomentumHeaderComponent
+    MomentumHeaderComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, MomentumTaskColumnComponent],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

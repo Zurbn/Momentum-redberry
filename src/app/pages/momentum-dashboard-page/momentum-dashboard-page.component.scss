@@ -1,0 +1,22 @@
+@use "/src/styles/constants";
+
+.page-name {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
+  letter-spacing: 0.1125rem;
+}
+.dropdown-container {
+  width: fit-content;
+  padding: 0.625rem 1.125rem;
+  gap: 2.8125rem;
+  border: 1px solid #dee2e6;
+  border-radius: 0.625rem;
+}
+.dropdown {
+  cursor: pointer;
+  color: constants.$momentum-color-thertiaty;
+  display: flex;
+  gap: 0.8125rem;
+}
