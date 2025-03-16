@@ -8,6 +8,11 @@ import { MomentumDetailsPageComponent } from './pages/momentum-details-page/mome
 import { MomentumAddANewTaskComponent } from './pages/momentum-add-a-new-task/momentum-add-a-new-task.component';
 import { MomentumHeaderComponent } from './core/components/momentum-header/momentum-header.component';
 import { MomentumTaskColumnComponent } from './core/components/momentum-task-column/momentum-task-column.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './modules/material.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,7 +22,16 @@ import { MomentumTaskColumnComponent } from './core/components/momentum-task-col
     MomentumAddANewTaskComponent,
     MomentumHeaderComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MomentumTaskColumnComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MomentumTaskColumnComponent,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    HttpClientModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

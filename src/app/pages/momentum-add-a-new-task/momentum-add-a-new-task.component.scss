@@ -1,0 +1,27 @@
+.page-name {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 2.125rem;
+  line-height: 2.5625rem;
+  letter-spacing: 0.1125rem;
+}
+form {
+  background-color: #fbf9ffa6;
+  border: 1px solid #ddd2ff;
+  border-radius: 0.25rem;
+}
+textarea {
+  resize: none;
+}
+.add-task {
+  padding: 4.4375rem 0 3.875rem 3.4375rem;
+}
+.add-task-body {
+  gap: 10.0625rem;
+}
+.add-task-left {
+  gap: 7.375rem;
+}
+// .add-task-button {
+//   background-color: #8338ec;
+// }
