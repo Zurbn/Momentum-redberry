@@ -1,1 +1,84 @@
-<p>momentum-details-page works!</p>
+<div class="task-inner-page d-flex">
+  <div class="task-inner-page__left d-flex flex-column">
+    <div class="task-inner-page__left-type d-flex">
+      <div class="priority d-flex align-items-center justify-content-center">
+        <img
+          src="/assets/icons/middle-icon.svg"
+          alt=""
+          class="priority__icon"
+        />
+        საშუალო
+      </div>
+      <div class="category d-flex justify-content-center align-items-center">
+        დიზაინი
+      </div>
+    </div>
+    <div class="task-inner-page__task-title">
+      Redberry-ს საიტის ლენდინგის დიზაინი
+    </div>
+    <div class="task-inner-page__task-description">
+      მიზანია რომ შეიქმნას თანამედროვე, სუფთა და ფუნქციონალური დიზაინი, რომელიც
+      უზრუნველყოფს მარტივ ნავიგაციას და მკაფიო ინფორმაციის გადაცემას. დიზაინი
+      უნდა იყოს ადაპტირებადი (responsive), გამორჩეული ვიზუალით, მინიმალისტური
+      სტილით და ნათელი ტიპოგრაფიით.
+    </div>
+    <div class="task-inner-page__details">
+      <div class="task-inner-page__details-title">დავალების დეტალები</div>
+      <div class="task-inner-page__details-info"></div>
+    </div>
+  </div>
+
+  <div class="task-inner-page__right">
+    <div class="task-inner-page__right-comments">
+      <textarea
+        class="task-inner-page__right-comments-add"
+        placeholder="დაწერე კომენტარი"
+      ></textarea>
+      <div
+        class="task-inner-page__right-comments-submit d-flex align-items-center justify-content-center"
+      >
+        დააკომენტარე
+      </div>
+    </div>
+    <div class="task-inner-page__right-comments-quantity d-flex">
+      <div class="task-inner-page__right-comments-quantity-text">
+        კომენტარები
+      </div>
+      <div
+        class="task-inner-page__right-comments-quantity-number d-flex justify-content-center align-items-center"
+      >
+        {{ commentQuantity }}
+      </div>
+    </div>
+    <div class="test">
+      <div
+        *ngFor="let comment of commentAuthor"
+        class="task-inner-page__right-comments-feedbacks d-flex flex-column"
+      >
+        <div class="task-inner-page__right-comments-feedback d-flex">
+          <img [src]="comment.avatar" alt="" class="comment-icon" />
+          <div class="d-flex flex-column">
+            <div class="task-inner-page__right-comments-feedback-author">
+              {{ comment.author }}
+            </div>
+            <div class="task-inner-page__right-comments-feedback-comment">
+              {{ comment.comment }}
+            </div>
+            <div
+              class="task-inner-page__right-comments-feedback-reply d-flex align-items-center justify-content-center"
+            >
+              <img
+                class="task-inner-page__right-comments-feedback-reply-icon"
+                src="/assets/icons/arrow-left.svg"
+                alt=""
+              />
+              <div class="task-inner-page__right-comments-feedback-reply-text">
+                უპასუხე
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

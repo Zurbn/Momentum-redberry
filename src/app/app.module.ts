@@ -8,6 +8,8 @@ import { MomentumDetailsPageComponent } from './pages/momentum-details-page/mome
 import { MomentumAddANewTaskComponent } from './pages/momentum-add-a-new-task/momentum-add-a-new-task.component';
 import { MomentumHeaderComponent } from './core/components/momentum-header/momentum-header.component';
 import { MomentumTaskColumnComponent } from './core/components/momentum-task-column/momentum-task-column.component';
+import { GetPriorityColorPipe } from './core/pipes/get-priority-color.pipe';
+import { GetDepartmentColorPipe } from './core/pipes/get-department-color.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,13 @@ import { MomentumTaskColumnComponent } from './core/components/momentum-task-col
     MomentumAddANewTaskComponent,
     MomentumHeaderComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, MomentumTaskColumnComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    MomentumTaskColumnComponent,
+    GetPriorityColorPipe,
+    GetDepartmentColorPipe,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
