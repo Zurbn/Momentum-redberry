@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MomentumTaskCardModel } from '../../models/momentum-task-card.model';
-import { Priority } from '../../models/priority.enum';
+import { PriorityEnum } from '../../models/priority.enum';
 import { DepartmentTag } from '../../models/department.enum';
 import { CommonModule } from '@angular/common';
 import { MomentumTaskCardComponent } from '../momentum-task-card/momentum-task-card.component';
@@ -21,7 +21,7 @@ export class MomentumTaskColumnComponent {
   ];
   tasks: MomentumTaskCardModel[] = [
     {
-      priority: Priority.MIDDLE,
+      priority: PriorityEnum.MIDDLE,
       department: DepartmentTag.DESIGN,
       date: '22 იანვ, 2022',
       title: 'Redberry-ს საიტის ლენდინგის დიზაინი',
@@ -31,7 +31,7 @@ export class MomentumTaskColumnComponent {
       numberOfComments: 8,
     },
     {
-      priority: Priority.MIDDLE,
+      priority: PriorityEnum.MIDDLE,
       department: DepartmentTag.LOGISTIC,
       date: '22 იანვ, 2022',
       title: 'Redberry-ს საიტის ლენდინგის დიზაინი',
@@ -41,7 +41,7 @@ export class MomentumTaskColumnComponent {
       numberOfComments: 8,
     },
     {
-      priority: Priority.LOW,
+      priority: PriorityEnum.LOW,
       department: DepartmentTag.ITTECH,
       date: '22 იანვ, 2022',
       title: 'Redberry-ს საიტის ლენდინგის დიზაინი',
@@ -51,7 +51,7 @@ export class MomentumTaskColumnComponent {
       numberOfComments: 8,
     },
     {
-      priority: Priority.HIGH,
+      priority: PriorityEnum.HIGH,
       department: DepartmentTag.MARKETING,
       date: '22 იანვ, 2022',
       title: 'Redberry-ს საიტის ლენდინგის დიზაინი',

@@ -94,31 +94,33 @@
                 appearance="outline"
               >
                 <mat-select formControlName="priority">
-                  <!-- Custom Selected Value -->
-                  <mat-select-trigger>
-                    <mat-icon
-                      *ngIf="priorities[addATaskForm.get('priority')?.value]"
-                      [svgIcon]="'check'"
-                      class="momentum-icon momentum-icon--16"
-                    >
-                    </mat-icon>
-                    {{
-                      priorities[addATaskForm.get("priority")?.value] ||
-                        "Select Priority"
-                    }}
+                  <mat-select-trigger
+                    *ngIf="
+                      addATaskForm
+                        | appGetPriorityData
+                          : priorities
+                          : formValue as selectedPriority
+                    "
+                  >
+                    <img
+                      [src]="selectedPriority.icon"
+                      alt=""
+                      class="add-a-task__dropdown-icon momentum-icon momentum-icon--16"
+                    />
+                    {{ selectedPriority?.name || "Select Priority" }}
                   </mat-select-trigger>
 
-                  <!-- Dropdown Options -->
                   <mat-option
-                    *ngFor="let priority of priorities | keyvalue"
-                    [value]="priority.key"
+                    *ngFor="let priority of priorities"
+                    [value]="priority.id"
                   >
-                    <mat-icon
-                      [svgIcon]="'check'"
-                      class="momentum-icon momentum-icon--16 d-flex"
-                    >
-                    </mat-icon>
-                    {{ priority.value }}
+                    <img
+                      [src]="priority.icon"
+                      alt=""
+                      class="add-a-task__dropdown-icon momentum-icon momentum-icon--16"
+                    />
+
+                    {{ priority.name }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -133,9 +135,9 @@
               >
                 <mat-select formControlName="status">
                   <mat-option
-                    *ngFor="let status of statuses | keyvalue"
-                    [value]="status.key"
-                    >{{ status.value }}</mat-option
+                    *ngFor="let status of statuses"
+                    [value]="status.id"
+                    >{{ status.name }}</mat-option
                   >
                 </mat-select>
               </mat-form-field>
@@ -156,9 +158,9 @@
               >
                 <mat-select formControlName="department">
                   <mat-option
-                    *ngFor="let department of departments | keyvalue"
-                    [value]="department.key"
-                    >{{ department.value }}</mat-option
+                    *ngFor="let department of departments"
+                    [value]="department.id"
+                    >{{ department.name }}</mat-option
                   >
                 </mat-select>
               </mat-form-field>
@@ -182,14 +184,15 @@
                     >
                   </mat-option>
                   <mat-option
-                    *ngFor="let department of departments | keyvalue"
-                    [value]="department.key"
+                    *ngFor="
+                      let employee of employees
+                        | appFilterEmployeesByDepartment : formValue
+                    "
+                    [value]="employee.id"
                   >
-                    <img
-                      src="https://momentum.redberryinternship.ge/storage/priority-icons/Low.svg"
-                      alt=""
-                      class="mr-2"
-                    />{{ department.value }}</mat-option
+                    <img [src]="employee.avatar" alt="" class="mr-2" />{{
+                      employee.name
+                    }}</mat-option
                   >
                 </mat-select>
               </mat-form-field>
@@ -223,6 +226,7 @@
           class="add-a-task__submit momentum-body-2 momentum-button momentum-button--primary"
           id="add-a-task__submit"
           mat-button
+          (click)="handleSubmit()"
         >
           დავალების შექმნა
         </button>

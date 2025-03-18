@@ -1,8 +1,16 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Department } from 'src/app/core/models/department.enum';
-import { Priority } from 'src/app/core/models/priority.enum';
-import { Status } from 'src/app/core/models/status.enum';
+import { filter, forkJoin, map, take } from 'rxjs';
+import { Department } from 'src/api/models/department/responses/department.model';
+import { Employee } from 'src/api/models/employee/responses/employee.model';
+import { Priority } from 'src/api/models/priority/responses/priority.model';
+import { Status } from 'src/api/models/status/responses/status.model';
+import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-request.model';
+import { AddATaskFormData } from 'src/app/core/models/add-a-task-form-data.model';
+import { LoadingState } from 'src/app/core/models/loading-state.model';
+import { PriorityEnum } from 'src/app/core/models/priority.enum';
+import { StatusEnum } from 'src/app/core/models/status.enum';
+import { MomentumStoreFacade } from 'src/stores/momentum-store/facade';
 
 @Component({
   selector: 'app-momentum-add-a-new-task',
@@ -11,17 +19,72 @@ import { Status } from 'src/app/core/models/status.enum';
 })
 export class MomentumAddANewTaskComponent {
   public addATaskForm: FormGroup;
+  formValue: AddATaskFormData;
+
+  public priorities: Priority[];
+
+  public statuses: Status[];
+
+  public departments: Department[];
+  public employees: Employee[];
+
+  private errorRetrievingPriorities = false;
+  private errorRetrievingStatuses = false;
+  private errorRetrievingDepartments = false;
+  private errorRetrievingEmployees = false;
+
   public readonly VALIDATION_RULES = [
     'მინიმუმ 2 სიმბოლო',
     'მაქსიმუმ 256 სიმბოლო',
   ];
-  public priorities = Priority;
+  public priorities$ = this.momentumStoreFacade.retrievePriorities().pipe(
+    filter((prioritiesState) => {
+      if (prioritiesState.loadingState === LoadingState.ERROR) {
+        this.errorRetrievingPriorities = true;
+      }
+      return prioritiesState.loadingState === LoadingState.LOADED;
+    }),
+    take(1),
+    map((statusesState) => statusesState.priorities)
+  );
 
-  public statuses = Status;
+  public statuses$ = this.momentumStoreFacade.retrieveStatuses().pipe(
+    filter((statusesState) => {
+      if (statusesState.loadingState === LoadingState.ERROR) {
+        this.errorRetrievingStatuses = true;
+      }
+      return statusesState.loadingState === LoadingState.LOADED;
+    }),
+    take(1),
+    map((statusesState) => statusesState.statuses)
+  );
 
-  public departments = Department;
+  public departments$ = this.momentumStoreFacade.retrieveDepartments().pipe(
+    filter((departmentsState) => {
+      if (departmentsState.loadingState === LoadingState.ERROR) {
+        this.errorRetrievingDepartments = true;
+      }
+      return departmentsState.loadingState === LoadingState.LOADED;
+    }),
+    take(1),
+    map((departmentsState) => departmentsState.departments)
+  );
 
-  constructor(private fb: FormBuilder) {
+  public employees$ = this.momentumStoreFacade.retrieveEmployees().pipe(
+    filter((departmentsState) => {
+      if (departmentsState.loadingState === LoadingState.ERROR) {
+        this.errorRetrievingEmployees = true;
+      }
+      return departmentsState.loadingState === LoadingState.LOADED;
+    }),
+    take(1),
+    map((departmentsState) => departmentsState.employees)
+  );
+
+  constructor(
+    private fb: FormBuilder,
+    private momentumStoreFacade: MomentumStoreFacade
+  ) {
     this.initializeForm();
   }
   get tomorrow(): string {
@@ -30,28 +93,74 @@ export class MomentumAddANewTaskComponent {
     return tomorrow.toISOString().split('T')[0];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.retrieveFormDynamicData();
+  }
 
   private initializeForm() {
+    const storedData = localStorage.getItem('addANewTaskData');
+    this.formValue = storedData ? JSON.parse(storedData) : null;
     this.addATaskForm = this.fb.group({
       title: [
-        '',
+        this.formValue?.title || '',
         [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(255),
         ],
       ],
-      description: ['', [Validators.minLength(3), Validators.maxLength(255)]],
-      priority: [Priority.MIDDLE, [Validators.required]],
-      status: [Status.TODO, Validators.required],
-      department: ['', Validators.required],
-      assignedTo: ['', Validators.required],
-      dueDate: [this.tomorrow, Validators.required],
+      description: [
+        this.formValue?.description || '',
+        [Validators.minLength(3), Validators.maxLength(255)],
+      ],
+      priority: [this.formValue?.priority || 1, [Validators.required]],
+      status: [this.formValue?.status || 1, Validators.required],
+      department: [this.formValue?.department, Validators.required],
+      assignedTo: [this.formValue?.assignedTo, Validators.required],
+      dueDate: [this.formValue?.dueDate || this.tomorrow, Validators.required],
     });
 
-    this.addATaskForm.valueChanges.subscribe((x) => {
-      console.log(this.addATaskForm);
+    this.addATaskForm.valueChanges.subscribe((formValue) => {
+      this.formValue = formValue;
+      localStorage.setItem('addANewTaskData', JSON.stringify(formValue));
     });
+  }
+
+  private retrieveFormDynamicData(): void {
+    forkJoin([
+      this.priorities$,
+      this.statuses$,
+      this.departments$,
+      this.employees$,
+    ]).subscribe(([priorities, statuses, departments, employees]) => {
+      this.priorities = priorities;
+      this.statuses = statuses;
+      this.departments = departments;
+      this.employees = employees;
+      console.log(employees);
+    });
+  }
+
+  public handleSubmit(): void {
+    console.log(this.formValue);
+    const taskCreateRequest: TaskCreateRequest = {
+      name: this.formValue?.title,
+      description: this.formValue.description,
+      due_date: this.formValue.dueDate,
+      employee_id: this.formValue.assignedTo,
+      priority_id: this.formValue.priority,
+      status_id: this.formValue.status,
+    };
+    this.momentumStoreFacade
+      .createTask(taskCreateRequest)
+      .pipe(
+        filter(
+          (taskState) => taskState.createLoadingState !== LoadingState.LOADING
+        )
+      )
+      .subscribe((registrationResponse) => {
+        console.log(registrationResponse);
+        localStorage.setItem('addANewTaskData', null);
+      });
   }
 }

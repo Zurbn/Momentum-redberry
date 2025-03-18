@@ -142,7 +142,7 @@ export const MomentumStoreReducer = createReducer(
       employeesState: {
         ...state.employeesState,
         registerLoadingState: LoadingState.LOADING,
-        employees: [...state?.employeesState?.employees, employee],
+        employees: [...(state?.employeesState?.employees || []), employee],
       },
     };
   }),
@@ -204,7 +204,7 @@ export const MomentumStoreReducer = createReducer(
       commentsState: {
         ...state.commentsState,
         createLoadingState: LoadingState.LOADING,
-        comments: [...state?.commentsState?.comments, comment],
+        comments: [...(state?.commentsState?.comments || []), comment],
       },
     };
   }),
@@ -296,8 +296,8 @@ export const MomentumStoreReducer = createReducer(
       ...state,
       tasksState: {
         ...state.tasksState,
-        createLoadingState: LoadingState.LOADING,
-        tasks: [...state?.tasksState?.tasks, task],
+        createLoadingState: LoadingState.LOADED,
+        tasks: [...(state?.tasksState?.tasks || []), task],
       },
     };
   }),
@@ -325,8 +325,8 @@ export const MomentumStoreReducer = createReducer(
       ...state,
       tasksState: {
         ...state.tasksState,
-        updateLoadingState: LoadingState.LOADING,
-        tasks: [...state?.tasksState?.tasks, task],
+        updateLoadingState: LoadingState.LOADED,
+        tasks: [...(state?.tasksState?.tasks || []), task],
       },
     };
   }),

@@ -4,7 +4,7 @@ export enum DepartmentTag {
   ITTECH = 'ინფ. ტექ.',
   MARKETING = 'მარკეტინგი',
 }
-export enum Department {
+export enum DepartmentEnum {
   DESIGN = 'დიზადიზაინის დეპარტამენტიინი',
   LOGISTIC = 'ლოჯისტიკის დეპარტამენტი',
   ITTECH = 'IT დეპარტამენტი',

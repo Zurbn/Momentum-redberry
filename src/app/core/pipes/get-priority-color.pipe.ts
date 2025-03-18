@@ -1,18 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Priority } from '../models/priority.enum';
+import { PriorityEnum } from '../models/priority.enum';
 
 @Pipe({
   name: 'getPriorityColor',
   standalone: true,
 })
 export class GetPriorityColorPipe implements PipeTransform {
-  transform(priority: Priority): { color: string; icon: string } {
+  transform(priority: PriorityEnum): { color: string; icon: string } {
     switch (priority) {
-      case Priority.HIGH:
+      case PriorityEnum.HIGH:
         return { color: '#FA4D4D', icon: '/assets/icons/high-icon.svg' };
-      case Priority.MIDDLE:
+      case PriorityEnum.MIDDLE:
         return { color: '#FFBE0B', icon: '/assets/icons/middle-icon.svg' };
-      case Priority.LOW:
+      case PriorityEnum.LOW:
         return { color: '#08A508', icon: '/assets/icons/low-icon.svg' };
       default:
         return { color: 'yellow', icon: '/assets/icons/low-icon.svg' };

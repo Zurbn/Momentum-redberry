@@ -1,5 +1,5 @@
 @use "/src/styles/reset";
-@use "../src/styles/material/material-overrides" as overrides;
+@use "../src/styles/material-overrides/material-overrides" as overrides;
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use "@angular/material" as mat;

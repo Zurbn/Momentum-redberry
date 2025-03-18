@@ -169,8 +169,8 @@ export const UpdateTask = createAction(
 );
 
 export const TaskUpdated = createAction(
-  '[Momentum] Successfully created Task',
+  '[Momentum] Successfully updated Task',
   props<{ task: Task }>()
 );
 
-export const ErrorUpdatingTask = createAction('[Momentum] Error creating Task');
+export const ErrorUpdatingTask = createAction('[Momentum] Error updating Task');

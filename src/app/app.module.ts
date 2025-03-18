@@ -15,6 +15,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { MomentumStoreModule } from 'src/stores/momentum-store';
 import { EffectsModule } from '@ngrx/effects';
+import { GetRulesStatePipe } from './core/pipes/get-rules-state.pipe';
+import { GetPriorityDataPipe } from './core/pipes/getPriorityData.pipe';
+import { FilterEmployeesByDepartmentPipe } from './core/pipes/filterEmployeesByDepartment.pipe';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,9 @@ import { EffectsModule } from '@ngrx/effects';
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     MomentumStoreModule,
+    GetRulesStatePipe,
+    GetPriorityDataPipe,
+    FilterEmployeesByDepartmentPipe,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,8 +1,8 @@
 import { DepartmentTag } from './department.enum';
-import { Priority } from './priority.enum';
+import { PriorityEnum } from './priority.enum';
 
 export interface MomentumTaskCardModel {
-  priority: Priority;
+  priority: PriorityEnum;
   department: DepartmentTag;
   date: string;
   title: string;
