@@ -1,5 +1,6 @@
 import { LoadingState } from 'src/app/core/models/loading-state.model';
 import { Status } from 'src/api/models/status/responses/status.model';
+import { Priority } from 'src/api/models/priority/responses/priority.model';
 
 export const MOMENTUM_STORE_KEY = 'momentum';
 
@@ -8,11 +9,20 @@ export interface MomentumStoreState {
     loadingState: LoadingState;
     statuses: Status[];
   };
+
+  prioritiesState: {
+    loadingState: LoadingState;
+    priorities: Priority[];
+  };
 }
 
 export const initialMomentumState: MomentumStoreState = {
   statusesState: {
     loadingState: LoadingState.INIT,
     statuses: null,
+  },
+  prioritiesState: {
+    loadingState: LoadingState.INIT,
+    priorities: null,
   },
 };

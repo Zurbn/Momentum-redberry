@@ -5,6 +5,7 @@ import { LoadingState } from 'src/app/core/models/loading-state.model';
 
 export const MomentumStoreReducer = createReducer(
   initialMomentumState,
+  //! Priorities
   on(MomentumStoreActions.RetrieveStatuses, (state) => {
     return {
       ...state,
@@ -31,9 +32,35 @@ export const MomentumStoreReducer = createReducer(
         statuses: null,
       },
     };
-  })
+  }),
 
-    ///
-  
-    
+  //! Priorities
+
+  on(MomentumStoreActions.RetrievePriorities, (state) => {
+    return {
+      ...state,
+      prioritiesState: {
+        loadingState: LoadingState.INIT,
+        priorities: null,
+      },
+    };
+  }),
+  on(MomentumStoreActions.PrioritiesRetrieved, (state, { priorities }) => {
+    return {
+      ...state,
+      prioritiesState: {
+        loadingState: LoadingState.LOADED,
+        priorities,
+      },
+    };
+  }),
+  on(MomentumStoreActions.ErrorRetrievingPriorities, (state) => {
+    return {
+      ...state,
+      prioritiesState: {
+        loadingState: LoadingState.ERROR,
+        priorities: null,
+      },
+    };
+  })
 );

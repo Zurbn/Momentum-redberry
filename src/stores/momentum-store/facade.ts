@@ -14,6 +14,10 @@ export class MomentumStoreFacade {
     select(MomentumStoreSelectors.selectStatusesState)
   );
 
+  private selectPrioritiesState$ = this.store.pipe(
+    select(MomentumStoreSelectors.selectPrioritiesState)
+  );
+
   constructor(private store: Store<MomentumStoreState>) {}
 
   public retrieveStatuses(
@@ -30,6 +34,24 @@ export class MomentumStoreFacade {
         }
 
         return selectStatusesState.loadingState !== LoadingState.INIT;
+      })
+    );
+  }
+
+  public retrievePriorities(
+    retry?: boolean
+  ): Observable<MomentumStoreState['prioritiesState']> {
+    if (retry) {
+      this.store.dispatch(MomentumStoreActions.RetrievePriorities());
+    }
+
+    return this.selectPrioritiesState$.pipe(
+      filter((selectPrioritiesState) => {
+        if (selectPrioritiesState.loadingState === LoadingState.INIT) {
+          this.store.dispatch(MomentumStoreActions.RetrievePriorities());
+        }
+
+        return selectPrioritiesState.loadingState !== LoadingState.INIT;
       })
     );
   }
