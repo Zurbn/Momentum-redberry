@@ -4,13 +4,13 @@ import { Observable } from 'rxjs';
 import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-request.model';
 import { TaskUpdateRequest } from 'src/api/models/task/requests/task-update-request.model';
 import { Task } from 'src/api/models/task/responses/task.model';
-import { enviroment } from 'src/enviroments/enviroment';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskControllerService {
-  private baseUrl = `${enviroment.momentumBaseUrl}`;
+  private baseUrl = `${environment.momentumBaseUrl}`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class TaskControllerService {
     return {
       headers: new HttpHeaders({
         Accept: 'application/json',
-        Authorization: `Bearer ${enviroment.momentumAuthToken}`,
+        Authorization: `Bearer ${environment.momentumAuthToken}`,
       }),
     };
   }

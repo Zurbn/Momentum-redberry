@@ -2,13 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Status } from 'src/api/models/status/responses/status.model';
-import { enviroment } from 'src/enviroments/enviroment';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StatusControllerService {
-  private baseUrl = `${enviroment.momentumBaseUrl}`;
+  private baseUrl = `${environment.momentumBaseUrl}`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class StatusControllerService {
     return {
       headers: new HttpHeaders({
         Accept: 'application/json',
-        Authorization: `Bearer ${enviroment.momentumAuthToken}`,
+        Authorization: `Bearer ${environment.momentumAuthToken}`,
       }),
     };
   }

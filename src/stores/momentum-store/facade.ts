@@ -5,7 +5,8 @@ import * as MomentumStoreActions from './actions';
 import { select, Store } from '@ngrx/store';
 import { Observable, filter } from 'rxjs';
 import { LoadingState } from 'src/app/core/models/loading-state.model';
-import { EmployeeCreateRequest } from 'src/api/models/employee/requests/empolyee-create-request.model';
+import { EmployeeCreateRequest } from 'src/api/models/employee/requests/employee-create-request.model';
+import { CommentCreateRequest } from 'src/api/models/comment/requests/comment-create-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,9 @@ export class MomentumStoreFacade {
     select(MomentumStoreSelectors.selectEmployeesState)
   );
 
+  private selectCommentsState$ = this.store.pipe(
+    select(MomentumStoreSelectors.selectCommentsState)
+  );
   constructor(private store: Store<MomentumStoreState>) {}
 
   public retrieveStatuses(
@@ -120,6 +124,59 @@ export class MomentumStoreFacade {
         }
 
         return employeesState.registerLoadingState !== LoadingState.INIT;
+      })
+    );
+  }
+
+  public retrieveCommentsForASpecificTask(
+    taskId: number,
+    retry?: boolean
+  ): Observable<MomentumStoreState['commentsState']> {
+    if (retry) {
+      this.store.dispatch(
+        MomentumStoreActions.RetrieveCommentsByTaskId({ taskId })
+      );
+    }
+
+    return this.selectCommentsState$.pipe(
+      filter((commentsState) => {
+        if (commentsState.loadingState === LoadingState.INIT) {
+          this.store.dispatch(
+            MomentumStoreActions.RetrieveCommentsByTaskId({ taskId })
+          );
+        }
+
+        return commentsState.loadingState !== LoadingState.INIT;
+      })
+    );
+  }
+
+  public createComment(
+    taskId: number,
+    commentCreateRequest: CommentCreateRequest,
+    retry?: boolean
+  ): Observable<MomentumStoreState['commentsState']> {
+    if (retry) {
+      this.store.dispatch(
+        MomentumStoreActions.CreateCommentForASpecificTask({
+          commentCreateRequest,
+          taskId,
+        })
+      );
+    }
+
+    return this.selectCommentsState$.pipe(
+      filter((employeesState) => {
+        if (employeesState.createLoadingState === LoadingState.INIT) {
+          this.store.dispatch(
+            MomentumStoreActions.CreateCommentForASpecificTask({
+              commentCreateRequest,
+              taskId,
+            })
+          );
+        }
+
+        return employeesState.createLoadingState !== LoadingState.INIT;
       })
     );
   }

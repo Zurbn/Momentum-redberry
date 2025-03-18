@@ -2,13 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Department } from 'src/api/models/department/responses/department.model';
-import { enviroment } from 'src/enviroments/enviroment';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DepartmentControllerService {
-  private baseUrl = `${enviroment.momentumBaseUrl}`;
+  private baseUrl = `${environment.momentumBaseUrl}`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class DepartmentControllerService {
     return {
       headers: new HttpHeaders({
         Accept: 'application/json',
-        Authorization: `Bearer ${enviroment.momentumAuthToken}`,
+        Authorization: `Bearer ${environment.momentumAuthToken}`,
       }),
     };
   }

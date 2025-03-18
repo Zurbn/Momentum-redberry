@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
+import { CommentCreateRequest } from 'src/api/models/comment/requests/comment-create-request.model';
 import { Department } from 'src/api/models/department/responses/department.model';
-import { EmployeeCreateRequest } from 'src/api/models/employee/requests/empolyee-create-request.model';
+import { EmployeeCreateRequest } from 'src/api/models/employee/requests/employee-create-request.model';
 import { Employee } from 'src/api/models/employee/responses/employee.model';
 import { Priority } from 'src/api/models/priority/responses/priority.model';
 import { Status } from 'src/api/models/status/responses/status.model';
@@ -73,10 +74,42 @@ export const RegisterEmployee = createAction(
 );
 
 export const EmployeeRegistered = createAction(
-  '[Momentum] Successfully register Employees',
+  '[Momentum] Successfully registered Employees',
   props<{ employee: Employee }>()
 );
 
 export const ErrorRegisteringEmployee = createAction(
   '[Momentum] Error registering Employee'
+);
+
+//! Employees
+
+//! Fetch
+export const RetrieveCommentsByTaskId = createAction(
+  '[Momentum] Retrieve all available Comments',
+  props<{ taskId: number }>()
+);
+
+export const CommentsRetrieved = createAction(
+  '[Momentum] Successfully retrieved all available Comments',
+  props<{ comments: Comment[] }>()
+);
+
+export const ErrorRetrievingComments = createAction(
+  '[Momentum] Error retrieving all available Comments'
+);
+
+//! Create
+export const CreateCommentForASpecificTask = createAction(
+  '[Momentum] Create Comment',
+  props<{ commentCreateRequest: CommentCreateRequest; taskId: number }>()
+);
+
+export const CommentCreated = createAction(
+  '[Momentum] Successfully registered Comment',
+  props<{ comment: Comment }>()
+);
+
+export const ErrorCreatingComment = createAction(
+  '[Momentum] Error registering Comment'
 );

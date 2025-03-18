@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { CommentCreateRequest } from 'src/api/models/comment/requests/comment-create-request.model';
 
-import { enviroment } from 'src/enviroments/enviroment';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CommentControllerService {
-  private baseUrl = `${enviroment.momentumBaseUrl}`;
+  private baseUrl = `${environment.momentumBaseUrl}`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -17,7 +17,7 @@ export class CommentControllerService {
     return {
       headers: new HttpHeaders({
         Accept: 'application/json',
-        Authorization: `Bearer ${enviroment.momentumAuthToken}`,
+        Authorization: `Bearer ${environment.momentumAuthToken}`,
       }),
     };
   }
@@ -31,8 +31,8 @@ export class CommentControllerService {
   public createNewComment(
     commentCreateRequest: CommentCreateRequest,
     taskID: number
-  ): Observable<Comment[]> {
-    return this.httpClient.post<Comment[]>(
+  ): Observable<Comment> {
+    return this.httpClient.post<Comment>(
       `${this.baseUrl}/tasks/${taskID}/comments`,
       commentCreateRequest,
       this.headers

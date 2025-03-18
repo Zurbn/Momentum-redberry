@@ -6,6 +6,7 @@ import { StatusControllerService } from 'src/api/services/statuses/status-contro
 import { PriorityControllerService } from 'src/api/services/priorities/priority-controller.service';
 import { DepartmentControllerService } from 'src/api/services/departments/department-controller.service';
 import { EmployeeControllerService } from 'src/api/services/employees/employee-controller.service';
+import { CommentControllerService } from 'src/api/services/comments/comment-controller.service';
 
 @Injectable()
 export class MomentumStoreEffects {
@@ -14,7 +15,8 @@ export class MomentumStoreEffects {
     private statusControllerService: StatusControllerService,
     private priorityControllerService: PriorityControllerService,
     private departmentControllerService: DepartmentControllerService,
-    private employeeControllerService: EmployeeControllerService
+    private employeeControllerService: EmployeeControllerService,
+    private commentControllerService: CommentControllerService
   ) {}
 
   fetchStatuses$ = createEffect(() =>
@@ -103,6 +105,44 @@ export class MomentumStoreEffects {
             }),
             catchError((error) =>
               of(MomentumStoreActions.ErrorRegisteringEmployee())
+            )
+          );
+      })
+    )
+  );
+
+  fetchComments$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MomentumStoreActions.RetrieveCommentsByTaskId),
+      switchMap(({ taskId }) => {
+        return this.commentControllerService.fetchAllComments(taskId).pipe(
+          map((comments) => {
+            return MomentumStoreActions.CommentsRetrieved({
+              comments,
+            });
+          }),
+          catchError((error) =>
+            of(MomentumStoreActions.ErrorRetrievingComments())
+          )
+        );
+      })
+    )
+  );
+
+  createComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MomentumStoreActions.CreateCommentForASpecificTask),
+      switchMap(({ commentCreateRequest, taskId }) => {
+        return this.commentControllerService
+          .createNewComment(commentCreateRequest, taskId)
+          .pipe(
+            map((comment) => {
+              return MomentumStoreActions.CommentCreated({
+                comment,
+              });
+            }),
+            catchError((error) =>
+              of(MomentumStoreActions.ErrorCreatingComment())
             )
           );
       })

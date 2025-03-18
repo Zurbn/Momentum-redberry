@@ -154,5 +154,67 @@ export const MomentumStoreReducer = createReducer(
         registerLoadingState: LoadingState.ERROR,
       },
     };
+  }),
+
+  //! Comments
+
+  on(MomentumStoreActions.RetrieveCommentsByTaskId, (state) => {
+    return {
+      ...state,
+      commentsState: {
+        ...state.commentsState,
+        loadingState: LoadingState.LOADING,
+        comments: null,
+      },
+    };
+  }),
+  on(MomentumStoreActions.CommentsRetrieved, (state, { comments }) => {
+    return {
+      ...state,
+      commentsState: {
+        ...state.commentsState,
+        loadingState: LoadingState.LOADED,
+        comments,
+      },
+    };
+  }),
+  on(MomentumStoreActions.ErrorRetrievingComments, (state) => {
+    return {
+      ...state,
+      commentsState: {
+        ...state.commentsState,
+        loadingState: LoadingState.ERROR,
+        comments: null,
+      },
+    };
+  }),
+
+  on(MomentumStoreActions.CreateCommentForASpecificTask, (state) => {
+    return {
+      ...state,
+      commentsState: {
+        ...state.commentsState,
+        createLoadingState: LoadingState.LOADING,
+      },
+    };
+  }),
+  on(MomentumStoreActions.CommentCreated, (state, { comment }) => {
+    return {
+      ...state,
+      commentsState: {
+        ...state.commentsState,
+        createLoadingState: LoadingState.LOADING,
+        comments: [...state?.commentsState?.comments, comment],
+      },
+    };
+  }),
+  on(MomentumStoreActions.ErrorCreatingComment, (state) => {
+    return {
+      ...state,
+      commentsState: {
+        ...state.commentsState,
+        createLoadingState: LoadingState.ERROR,
+      },
+    };
   })
 );

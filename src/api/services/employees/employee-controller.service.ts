@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { EmployeeCreateRequest } from 'src/api/models/employee/requests/empolyee-create-request.model';
+import { EmployeeCreateRequest } from 'src/api/models/employee/requests/employee-create-request.model';
 import { Employee } from 'src/api/models/employee/responses/employee.model';
-import { enviroment } from 'src/enviroments/enviroment';
+import { environment } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeControllerService {
-  private baseUrl = `${enviroment.momentumBaseUrl}`;
+  private baseUrl = `${environment.momentumBaseUrl}`;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -17,7 +17,7 @@ export class EmployeeControllerService {
     return {
       headers: new HttpHeaders({
         Accept: 'application/json',
-        Authorization: `Bearer ${enviroment.momentumAuthToken}`,
+        Authorization: `Bearer ${environment.momentumAuthToken}`,
       }),
     };
   }
