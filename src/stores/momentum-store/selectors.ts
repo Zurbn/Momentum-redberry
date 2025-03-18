@@ -13,3 +13,8 @@ export const selectPrioritiesState = createSelector(
   selectMomentumFeature,
   (state: MomentumStoreState) => state.prioritiesState
 );
+
+export const selectDepartmentsState = createSelector(
+  selectMomentumFeature,
+  (state: MomentumStoreState) => state.departmentsState
+);

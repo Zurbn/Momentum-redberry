@@ -18,6 +18,10 @@ export class MomentumStoreFacade {
     select(MomentumStoreSelectors.selectPrioritiesState)
   );
 
+  private selectDepartmentsState$ = this.store.pipe(
+    select(MomentumStoreSelectors.selectDepartmentsState)
+  );
+
   constructor(private store: Store<MomentumStoreState>) {}
 
   public retrieveStatuses(
@@ -28,12 +32,12 @@ export class MomentumStoreFacade {
     }
 
     return this.selectStatusesState$.pipe(
-      filter((selectStatusesState) => {
-        if (selectStatusesState.loadingState === LoadingState.INIT) {
+      filter((statusesState) => {
+        if (statusesState.loadingState === LoadingState.INIT) {
           this.store.dispatch(MomentumStoreActions.RetrieveStatuses());
         }
 
-        return selectStatusesState.loadingState !== LoadingState.INIT;
+        return statusesState.loadingState !== LoadingState.INIT;
       })
     );
   }
@@ -46,12 +50,30 @@ export class MomentumStoreFacade {
     }
 
     return this.selectPrioritiesState$.pipe(
-      filter((selectPrioritiesState) => {
-        if (selectPrioritiesState.loadingState === LoadingState.INIT) {
+      filter((prioritiesState) => {
+        if (prioritiesState.loadingState === LoadingState.INIT) {
           this.store.dispatch(MomentumStoreActions.RetrievePriorities());
         }
 
-        return selectPrioritiesState.loadingState !== LoadingState.INIT;
+        return prioritiesState.loadingState !== LoadingState.INIT;
+      })
+    );
+  }
+
+  public retrieveDepartments(
+    retry?: boolean
+  ): Observable<MomentumStoreState['departmentsState']> {
+    if (retry) {
+      this.store.dispatch(MomentumStoreActions.RetrieveDepartments());
+    }
+
+    return this.selectDepartmentsState$.pipe(
+      filter((departmentsState) => {
+        if (departmentsState.loadingState === LoadingState.INIT) {
+          this.store.dispatch(MomentumStoreActions.RetrieveDepartments());
+        }
+
+        return departmentsState.loadingState !== LoadingState.INIT;
       })
     );
   }
