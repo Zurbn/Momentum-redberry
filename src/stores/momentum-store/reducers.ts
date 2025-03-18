@@ -40,7 +40,7 @@ export const MomentumStoreReducer = createReducer(
     return {
       ...state,
       prioritiesState: {
-        loadingState: LoadingState.INIT,
+        loadingState: LoadingState.LOADING,
         priorities: null,
       },
     };
@@ -70,7 +70,7 @@ export const MomentumStoreReducer = createReducer(
     return {
       ...state,
       departmentsState: {
-        loadingState: LoadingState.INIT,
+        loadingState: LoadingState.LOADING,
         departments: null,
       },
     };
@@ -90,6 +90,68 @@ export const MomentumStoreReducer = createReducer(
       departmentsState: {
         loadingState: LoadingState.ERROR,
         departments: null,
+      },
+    };
+  }),
+
+  //! Employees
+
+  on(MomentumStoreActions.RetrieveEmployees, (state) => {
+    return {
+      ...state,
+      employeesState: {
+        ...state.employeesState,
+        loadingState: LoadingState.LOADING,
+        employees: null,
+      },
+    };
+  }),
+  on(MomentumStoreActions.EmployeesRetrieved, (state, { employees }) => {
+    return {
+      ...state,
+      employeesState: {
+        ...state.employeesState,
+        loadingState: LoadingState.LOADED,
+        employees,
+      },
+    };
+  }),
+  on(MomentumStoreActions.ErrorRetrievingEmployees, (state) => {
+    return {
+      ...state,
+      employeesState: {
+        ...state.employeesState,
+        loadingState: LoadingState.ERROR,
+        employees: null,
+      },
+    };
+  }),
+
+  on(MomentumStoreActions.RegisterEmployee, (state) => {
+    return {
+      ...state,
+      employeesState: {
+        ...state.employeesState,
+        registerLoadingState: LoadingState.LOADING,
+      },
+    };
+  }),
+  on(MomentumStoreActions.EmployeeRegistered, (state, { employee }) => {
+    return {
+      ...state,
+      employeesState: {
+        ...state.employeesState,
+        registerLoadingState: LoadingState.LOADING,
+        employees: [...state?.employeesState?.employees, employee],
+      },
+    };
+  }),
+  on(MomentumStoreActions.ErrorRegisteringEmployee, (state) => {
+    return {
+      ...state,
+      employeesState: {
+        ...state.employeesState,
+        registerLoadingState: LoadingState.ERROR,
       },
     };
   })

@@ -31,8 +31,8 @@ export class EmployeeControllerService {
 
   public addNewEmployee(
     employeeCreateRequest: EmployeeCreateRequest
-  ): Observable<Employee[]> {
-    return this.httpClient.post<Employee[]>(
+  ): Observable<Employee> {
+    return this.httpClient.post<Employee>(
       `${this.baseUrl}/employees`,
       employeeCreateRequest,
       this.headers

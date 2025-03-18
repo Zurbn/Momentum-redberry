@@ -5,6 +5,7 @@ import * as MomentumStoreActions from './actions';
 import { select, Store } from '@ngrx/store';
 import { Observable, filter } from 'rxjs';
 import { LoadingState } from 'src/app/core/models/loading-state.model';
+import { EmployeeCreateRequest } from 'src/api/models/employee/requests/empolyee-create-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,10 @@ export class MomentumStoreFacade {
 
   private selectDepartmentsState$ = this.store.pipe(
     select(MomentumStoreSelectors.selectDepartmentsState)
+  );
+
+  private selectEmployeesState$ = this.store.pipe(
+    select(MomentumStoreSelectors.selectEmployeesState)
   );
 
   constructor(private store: Store<MomentumStoreState>) {}
@@ -74,6 +79,47 @@ export class MomentumStoreFacade {
         }
 
         return departmentsState.loadingState !== LoadingState.INIT;
+      })
+    );
+  }
+
+  public retrieveEmployees(
+    retry?: boolean
+  ): Observable<MomentumStoreState['employeesState']> {
+    if (retry) {
+      this.store.dispatch(MomentumStoreActions.RetrieveEmployees());
+    }
+
+    return this.selectEmployeesState$.pipe(
+      filter((departmentsState) => {
+        if (departmentsState.loadingState === LoadingState.INIT) {
+          this.store.dispatch(MomentumStoreActions.RetrieveEmployees());
+        }
+
+        return departmentsState.loadingState !== LoadingState.INIT;
+      })
+    );
+  }
+
+  public registerEmployee(
+    employeeCreateRequest: EmployeeCreateRequest,
+    retry?: boolean
+  ): Observable<MomentumStoreState['employeesState']> {
+    if (retry) {
+      this.store.dispatch(
+        MomentumStoreActions.RegisterEmployee({ employeeCreateRequest })
+      );
+    }
+
+    return this.selectEmployeesState$.pipe(
+      filter((employeesState) => {
+        if (employeesState.registerLoadingState === LoadingState.INIT) {
+          this.store.dispatch(
+            MomentumStoreActions.RegisterEmployee({ employeeCreateRequest })
+          );
+        }
+
+        return employeesState.registerLoadingState !== LoadingState.INIT;
       })
     );
   }

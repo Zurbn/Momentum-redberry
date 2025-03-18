@@ -18,3 +18,8 @@ export const selectDepartmentsState = createSelector(
   selectMomentumFeature,
   (state: MomentumStoreState) => state.departmentsState
 );
+
+export const selectEmployeesState = createSelector(
+  selectMomentumFeature,
+  (state: MomentumStoreState) => state.employeesState
+);

@@ -1,5 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Department } from 'src/api/models/department/responses/department.model';
+import { EmployeeCreateRequest } from 'src/api/models/employee/requests/empolyee-create-request.model';
+import { Employee } from 'src/api/models/employee/responses/employee.model';
 import { Priority } from 'src/api/models/priority/responses/priority.model';
 import { Status } from 'src/api/models/status/responses/status.model';
 
@@ -46,4 +48,35 @@ export const DepartmentsRetrieved = createAction(
 
 export const ErrorRetrievingDepartments = createAction(
   '[Momentum] Error retrieving all available Departments'
+);
+
+//! Employees
+
+//! Fetch
+export const RetrieveEmployees = createAction(
+  '[Momentum] Retrieve all available Employees'
+);
+
+export const EmployeesRetrieved = createAction(
+  '[Momentum] Successfully retrieved all available Employees',
+  props<{ employees: Employee[] }>()
+);
+
+export const ErrorRetrievingEmployees = createAction(
+  '[Momentum] Error retrieving all available Employees'
+);
+
+//! Register
+export const RegisterEmployee = createAction(
+  '[Momentum] Register Employee',
+  props<{ employeeCreateRequest: EmployeeCreateRequest }>()
+);
+
+export const EmployeeRegistered = createAction(
+  '[Momentum] Successfully register Employees',
+  props<{ employee: Employee }>()
+);
+
+export const ErrorRegisteringEmployee = createAction(
+  '[Momentum] Error registering Employee'
 );
