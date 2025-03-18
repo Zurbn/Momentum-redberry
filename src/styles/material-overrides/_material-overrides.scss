@@ -1,0 +1,15 @@
+/*
+* General, application-level material settings for components
+* You may customise individual components by creating a dedicated Sass partial,
+* customizing the styling in the partial as per the requirements and include in this barrel file.
+*/
+
+@import "select";
+@import "form-field";
+@import "button";
+
+@mixin material-component-overrides() {
+  @include material-form-field-overrides;
+  @include material-select-overrides;
+  @include material-button-overrides;
+}

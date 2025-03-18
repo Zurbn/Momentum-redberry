@@ -1,105 +1,232 @@
-<p class="page-name mt-4 mb-1">შექმენი ახალი დავალება</p>
-<form [formGroup]="addATaskForm" *ngIf="addATaskForm">
-  <div class="add-task d-flex flex-column">
-    <div class="add-task-body d-flex">
-      <div class="add-task-left d-flex flex-column">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>სათაური</mat-label>
-          <input
-            type="text"
-            matInput
-            formControlName="title"
-            placeholder="შეიყვანე სათაური"
-          />
-          <mat-hint>მინიმუმ 3 სიმბოლო<br />Zuraba </mat-hint>
-          <!-- <mat-hint>მაქსიმუმ 255 სიმბოლო</mat-hint> -->
-          <mat-error *ngIf="addATaskForm.get('title').hasError"
-            >ერორია</mat-error
+<div class="add-a-task">
+  <p class="add-a-task__heading momentum-heading--1 mt-4">
+    შექმენი ახალი დავალება
+  </p>
+  <form
+    class="add-a-task__form"
+    [formGroup]="addATaskForm"
+    *ngIf="addATaskForm"
+  >
+    <div class="add-a-task__container d-flex flex-column">
+      <div class="add-a-task__inner-container d-flex">
+        <div
+          class="add-a-task__content add-a-task__content--left d-flex flex-column justify-content-between"
+        >
+          <div
+            *ngIf="
+              addATaskForm.get('title')
+                | getAppRulesState : formValue as colorStyle
+            "
           >
-        </mat-form-field>
-
-        <label>აღწერა</label>
-        <mat-form-field appearance="outline" class="w-100">
-          <textarea matInput formControlName="description"></textarea>
-          <mat-hint>მინიმუმ 3 სიმბოლო</mat-hint>
-          <mat-error *ngIf="addATaskForm.get('description').hasError"
-            >ერორია</mat-error
-          >
-        </mat-form-field>
-
-        <label>პრიორიტეტი</label>
-        <mat-form-field appearance="outline">
-          <mat-select formControlName="priority">
-            <mat-option
-              [value]="priority.key"
-              *ngFor="let priority of priorities | keyvalue"
+            <mat-label class="add-a-task__label momentum-body--1"
+              >სათაური*</mat-label
             >
-              <img
-                src="https://momentum.redberryinternship.ge/storage/priority-icons/Low.svg"
-                alt=""
+            <mat-form-field
+              appearance="outline"
+              class="add-a-task__title d-flex flex-column momentum-form-field momentum-form-field--45"
+            >
+              <input
+                matInput
+                type="text"
+                formControlName="title"
+                name="title"
+                class="momentum-input momentum-input--45"
               />
-              {{ priority.value }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+            </mat-form-field>
+            <div class="add-a-task__rules d-flex flex-column gap gap--2 mt-1">
+              <span
+                class="add-a-task__rule d-flex gap gap--2"
+                *ngFor="let rules of VALIDATION_RULES"
+                [ngClass]="colorStyle"
+              >
+                <mat-icon
+                  svgIcon="check"
+                  class="momentum-icon momentum-icon--16"
+                ></mat-icon>
+                {{ rules }}
+              </span>
+            </div>
+          </div>
 
-        <label>სტატუსი</label>
-        <mat-form-field appearance="outline">
-          <mat-select formControlName="status">
-            <mat-option
-              *ngFor="let status of statuses | keyvalue"
-              [value]="status.key"
-              >{{ status.value }}</mat-option
+          <div class="add-a-task__description d-flex flex-column">
+            <mat-label class="add-a-task__label momentum-body--1"
+              >აღწერა</mat-label
             >
-          </mat-select>
-        </mat-form-field>
+            <mat-form-field
+              appearance="outline"
+              class="momentum-textarea-form-field"
+            >
+              <textarea
+                matInput
+                rows="4"
+                formControlName="description"
+              ></textarea>
+            </mat-form-field>
+            <div
+              class="add-a-task__rules d-flex flex-column gap gap--2 mt-1"
+              *ngIf="
+                addATaskForm.get('description')
+                  | getAppRulesState : formValue as colorStyle
+              "
+            >
+              <span
+                class="add-a-task__rule d-flex gap gap--2"
+                *ngFor="let rules of VALIDATION_RULES"
+                [ngClass]="colorStyle"
+              >
+                <mat-icon
+                  svgIcon="check"
+                  [ngClass]="colorStyle"
+                  class="momentum-icon momentum-icon--16"
+                ></mat-icon>
+                {{ rules }}
+              </span>
+            </div>
+          </div>
+
+          <div class="add-a-task__tag w-100 d-flex">
+            <div class="w-100 add-a-task__priority d-flex flex-column">
+              <mat-label class="add-a-task__label momentum-body--1"
+                >პრიორიტეტი*</mat-label
+              >
+              <mat-form-field
+                class="momentum-form-field momentum-form-field--45"
+                appearance="outline"
+              >
+                <mat-select formControlName="priority">
+                  <!-- Custom Selected Value -->
+                  <mat-select-trigger>
+                    <mat-icon
+                      *ngIf="priorities[addATaskForm.get('priority')?.value]"
+                      [svgIcon]="'check'"
+                      class="momentum-icon momentum-icon--16"
+                    >
+                    </mat-icon>
+                    {{
+                      priorities[addATaskForm.get("priority")?.value] ||
+                        "Select Priority"
+                    }}
+                  </mat-select-trigger>
+
+                  <!-- Dropdown Options -->
+                  <mat-option
+                    *ngFor="let priority of priorities | keyvalue"
+                    [value]="priority.key"
+                  >
+                    <mat-icon
+                      [svgIcon]="'check'"
+                      class="momentum-icon momentum-icon--16 d-flex"
+                    >
+                    </mat-icon>
+                    {{ priority.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="add-a-task__status d-flex flex-column w-100">
+              <mat-label class="add-a-task__label momentum-body--1"
+                >სტატუსი*</mat-label
+              >
+              <mat-form-field
+                class="momentum-form-field momentum-form-field--45"
+                appearance="outline"
+              >
+                <mat-select formControlName="status">
+                  <mat-option
+                    *ngFor="let status of statuses | keyvalue"
+                    [value]="status.key"
+                    >{{ status.value }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div
+          class="add-a-task__content add-a-task__content--right d-flex flex-column justify-content-between"
+        >
+          <div class="add-a-task__employee-and-department d-flex flex-column">
+            <div class="add-a-task__department d-flex flex-column">
+              <mat-label class="add-a-task__label momentum-body--1"
+                >დეპარტამენტი*</mat-label
+              >
+              <mat-form-field
+                class="momentum-form-field momentum-form-field--45"
+                appearance="outline"
+              >
+                <mat-select formControlName="department">
+                  <mat-option
+                    *ngFor="let department of departments | keyvalue"
+                    [value]="department.key"
+                    >{{ department.value }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="add-a-task__assigned-to d-flex flex-column">
+              <mat-label class="add-a-task__label momentum-body--1"
+                >პასუხისმგებელი თანამშრომელი*</mat-label
+              >
+              <mat-form-field
+                class="momentum-form-field momentum-form-field--45"
+                appearance="outline"
+              >
+                <mat-select formControlName="assignedTo">
+                  <mat-option class="d-flex align-items-center"
+                    ><mat-icon
+                      class="momentum-icon momentum-icon--18 d-flex justify-content-center align-items-center mr-2"
+                      [svgIcon]="'plus-circle'"
+                    ></mat-icon>
+                    <span class="momentum-body--1 momentum-body--1--primary"
+                      >დაამატე თანამშრომელი</span
+                    >
+                  </mat-option>
+                  <mat-option
+                    *ngFor="let department of departments | keyvalue"
+                    [value]="department.key"
+                  >
+                    <img
+                      src="https://momentum.redberryinternship.ge/storage/priority-icons/Low.svg"
+                      alt=""
+                      class="mr-2"
+                    />{{ department.value }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="add-a-task__deadline d-flex flex-column">
+            <mat-label class="add-a-task__label momentum-body--1"
+              >დედლაინი</mat-label
+            >
+            <mat-form-field
+              class="momentum-form-field momentum-form-field--45 momentum-form-field--date-picker"
+              appearance="outline"
+            >
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="dueDate"
+                [min]="tomorrow"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
       </div>
-      <div class="add-task-right d-flex flex-column">
-        <label>დეპარტამენტი</label>
-        <mat-form-field appearance="outline">
-          <mat-select formControlName="department">
-            <mat-option
-              *ngFor="let department of departments | keyvalue"
-              [value]="department.key"
-              >{{ department.value }}</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
-
-        <label>პასუხისმგებელი თანამშრომელი</label>
-        <mat-form-field appearance="outline">
-          <mat-select formControlName="assignedTo">
-            <mat-option
-              *ngFor="let department of departments | keyvalue"
-              [value]="department.key"
-            >
-              <img
-                src="https://momentum.redberryinternship.ge/storage/priority-icons/Low.svg"
-                alt=""
-              />{{ department.value }}</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
-
-        <mat-label>დედლაინი</mat-label>
-        <mat-form-field appearance="outline">
-          <input
-            matInput
-            [matDatepicker]="picker"
-            formControlName="dueDate"
-            [min]="tomorrow"
-          />
-          <mat-hint>Select a due date (default: tomorrow)</mat-hint>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+      <div class="d-flex justify-content-end">
+        <button
+          class="add-a-task__submit momentum-body-2 momentum-button momentum-button--primary"
+          id="add-a-task__submit"
+          mat-button
+        >
+          დავალების შექმნა
+        </button>
       </div>
     </div>
-    <div class="d-flex justify-content-end">
-      <button mat-button>დავალების შექმნა</button>
-    </div>
-  </div>
-</form>
+  </form>
+</div>

@@ -1,27 +1,53 @@
-.page-name {
-  display: inline-block;
-  font-weight: 600;
-  font-size: 2.125rem;
-  line-height: 2.5625rem;
-  letter-spacing: 0.1125rem;
+@use "/src/styles/input";
+@use "/src/styles/common";
+@use "/src/styles/typography";
+
+.add-a-task {
+  &__heading {
+    margin-bottom: 1.875rem;
+  }
+  &__form {
+    background-color: #fbf9ffa6;
+    border: 0.3px solid #ddd2ff;
+    border-radius: 0.25rem;
+  }
+  &__container {
+    padding: 4.4375rem 360px 3.875rem 3.4375rem;
+  }
+  &__inner-container {
+    gap: 10.0625rem;
+    margin-bottom: 9.25rem;
+  }
+  &__content {
+    width: 34.375rem;
+    height: 30rem;
+  }
+  &__textarea {
+    resize: none;
+  }
+  &__tag {
+    gap: 2rem;
+  }
+  &__submit {
+    font-size: 1.125rem;
+  }
+  &__employee-and-department {
+    gap: 5.8125rem;
+  }
+  &__label {
+    margin-bottom: 0.375rem;
+  }
+  &__deadline {
+    max-width: 19.875rem;
+  }
+
+  &__rule {
+    color: #6c757d;
+    &--invalid {
+      color: #fa4d4d;
+    }
+    &--success {
+      color: #08a508;
+    }
+  }
 }
-form {
-  background-color: #fbf9ffa6;
-  border: 1px solid #ddd2ff;
-  border-radius: 0.25rem;
-}
-textarea {
-  resize: none;
-}
-.add-task {
-  padding: 4.4375rem 0 3.875rem 3.4375rem;
-}
-.add-task-body {
-  gap: 10.0625rem;
-}
-.add-task-left {
-  gap: 7.375rem;
-}
-// .add-task-button {
-//   background-color: #8338ec;
-// }

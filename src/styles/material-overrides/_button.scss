@@ -1,0 +1,27 @@
+@use "../constants";
+
+@mixin material-button-overrides {
+  .mdc-button,
+  .mat-mdc-button:not(:disabled) {
+    &.mat-mdc-button.mat-mdc-button-base,
+    .mat-mdc-raised-button.mat-mdc-button-base,
+    .mat-mdc-unelevated-button.mat-mdc-button-base,
+    .mat-mdc-outlined-button.mat-mdc-button-base {
+      height: 100%;
+    }
+    &.momentum-button {
+      padding: 0.625rem 1.25rem;
+      letter-spacing: 0.045rem;
+      border-radius: 0.3125rem;
+      min-height: 40px;
+
+      &--primary {
+        background-color: constants.$momentum-color-primary;
+        color: constants.$momentum-color-light;
+      }
+      &--secondary {
+        border: 0.0625rem solid constants.$momentum-color-primary;
+      }
+    }
+  }
+}

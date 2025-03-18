@@ -1,0 +1,86 @@
+@mixin material-form-field-overrides {
+  .mat-form-field-appearance-outline {
+    &.momentum-form-field {
+      .mat-mdc-form-field-infix {
+        display: flex;
+        align-content: center;
+      }
+
+      &--date-picker {
+        .mat-mdc-text-field-wrapper {
+          padding-left: 0;
+        }
+        .mat-mdc-form-field-flex {
+          flex-direction: row-reverse;
+        }
+      }
+
+      &--45 {
+        height: 45px;
+        .mat-mdc-form-field-infix,
+        .mat-mdc-select-trigger {
+          height: 45px;
+          min-height: 45px;
+          .momentum-input.momentum-input--45 {
+            height: 45px;
+          }
+        }
+      }
+      &--42 {
+        height: 42px;
+        .mat-mdc-form-field-infix,
+        .mat-mdc-select-trigger {
+          height: 42px;
+          min-height: 42px;
+          .momentum-input.momentum-input--42 {
+            height: 42px;
+          }
+        }
+      }
+      &.mat-focused {
+        & .mdc-text-field--focused {
+          .mdc-notched-outline__leading,
+          .mdc-notched-outline__trailing {
+            border-color: rgba(0, 0, 0, 0.38);
+          }
+        }
+
+        &.ng-invalid:not(.ng-pristine) {
+          .mdc-notched-outline__leading,
+          .mdc-notched-outline__trailing {
+            border-color: #fa4d4d;
+          }
+        }
+      }
+      .mat-mdc-text-field-wrapper.mdc-text-field--outlined
+        .mat-mdc-form-field-infix {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+    &.momentum-textarea-form-field {
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+      }
+
+      &.mat-focused {
+        & .mdc-text-field--focused {
+          .mdc-notched-outline__leading,
+          .mdc-notched-outline__trailing {
+            border-color: rgba(0, 0, 0, 0.38);
+          }
+        }
+
+        &.ng-invalid:not(.ng-pristine) {
+          .mdc-notched-outline__leading,
+          .mdc-notched-outline__trailing {
+            border-color: #fa4d4d;
+          }
+        }
+      }
+    }
+    .mat-mdc-option .mat-pseudo-checkbox {
+      display: none;
+    }
+  }
+}

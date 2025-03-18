@@ -1,0 +1,10 @@
+@mixin material-select-overrides {
+  .mat-mdc-select.panelOpen .mat-mdc-select-arrow {
+    transform: rotate(180deg);
+  }
+  .mat-mdc-option {
+    .mat-mdc-option-pseudo-checkbox {
+      display: none;
+    }
+  }
+}

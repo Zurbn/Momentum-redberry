@@ -11,7 +11,10 @@ import { Status } from 'src/app/core/models/status.enum';
 })
 export class MomentumAddANewTaskComponent {
   public addATaskForm: FormGroup;
-
+  public readonly VALIDATION_RULES = [
+    'მინიმუმ 2 სიმბოლო',
+    'მაქსიმუმ 256 სიმბოლო',
+  ];
   public priorities = Priority;
 
   public statuses = Status;

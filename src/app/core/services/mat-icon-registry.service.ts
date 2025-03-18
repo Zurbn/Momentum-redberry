@@ -8,8 +8,16 @@ import { MatIconRegistry } from '@angular/material/icon';
 export class MatIconRegistryService {
   private icons = [
     {
-      name: 'home',
-      url: 'https://cdn.simpleicons.org/angular',
+      name: 'check',
+      url: '/assets/icons/check.svg',
+    },
+    {
+      name: 'plus-circle',
+      url: '/assets/icons/plus-circle.svg',
+    },
+    {
+      name: 'momentum-plus',
+      url: '/assets/icons/momentum-plus.svg',
     },
   ];
 
