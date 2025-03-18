@@ -216,5 +216,127 @@ export const MomentumStoreReducer = createReducer(
         createLoadingState: LoadingState.ERROR,
       },
     };
+  }),
+
+  //! Tasks
+
+  on(MomentumStoreActions.RetrieveTasks, (state) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        loadingState: LoadingState.LOADING,
+        tasks: null,
+      },
+    };
+  }),
+  on(MomentumStoreActions.TasksRetrieved, (state, { tasks }) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        loadingState: LoadingState.LOADED,
+        tasks,
+      },
+    };
+  }),
+  on(MomentumStoreActions.ErrorRetrievingTasks, (state) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        loadingState: LoadingState.ERROR,
+        tasks: null,
+      },
+    };
+  }),
+
+  on(MomentumStoreActions.RetrieveTaskById, (state) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        loadingState: LoadingState.LOADING,
+        selectedTask: null,
+      },
+    };
+  }),
+  on(MomentumStoreActions.TaskByIdRetrieved, (state, { selectedTask }) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        loadingState: LoadingState.LOADED,
+        selectedTask,
+      },
+    };
+  }),
+  on(MomentumStoreActions.ErrorRetrievingTaskById, (state) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        loadingState: LoadingState.ERROR,
+        selectedTask: null,
+      },
+    };
+  }),
+
+  on(MomentumStoreActions.CreateTask, (state) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        createLoadingState: LoadingState.LOADING,
+      },
+    };
+  }),
+  on(MomentumStoreActions.TaskCreated, (state, { task }) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        createLoadingState: LoadingState.LOADING,
+        tasks: [...state?.tasksState?.tasks, task],
+      },
+    };
+  }),
+  on(MomentumStoreActions.ErrorCreatingTask, (state) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        createLoadingState: LoadingState.ERROR,
+      },
+    };
+  }),
+
+  on(MomentumStoreActions.UpdateTask, (state) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        updateLoadingState: LoadingState.LOADING,
+      },
+    };
+  }),
+  on(MomentumStoreActions.TaskUpdated, (state, { task }) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        updateLoadingState: LoadingState.LOADING,
+        tasks: [...state?.tasksState?.tasks, task],
+      },
+    };
+  }),
+  on(MomentumStoreActions.ErrorUpdatingTask, (state) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        updateLoadingState: LoadingState.ERROR,
+      },
+    };
   })
 );

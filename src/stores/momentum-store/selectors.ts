@@ -28,3 +28,8 @@ export const selectCommentsState = createSelector(
   selectMomentumFeature,
   (state: MomentumStoreState) => state.commentsState
 );
+
+export const selectTasksState = createSelector(
+  selectMomentumFeature,
+  (state: MomentumStoreState) => state.tasksState
+);

@@ -7,6 +7,8 @@ import { Observable, filter } from 'rxjs';
 import { LoadingState } from 'src/app/core/models/loading-state.model';
 import { EmployeeCreateRequest } from 'src/api/models/employee/requests/employee-create-request.model';
 import { CommentCreateRequest } from 'src/api/models/comment/requests/comment-create-request.model';
+import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-request.model';
+import { TaskUpdateRequest } from 'src/api/models/task/requests/task-update-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +33,11 @@ export class MomentumStoreFacade {
   private selectCommentsState$ = this.store.pipe(
     select(MomentumStoreSelectors.selectCommentsState)
   );
+
+  private selectTasksState$ = this.store.pipe(
+    select(MomentumStoreSelectors.selectTasksState)
+  );
+
   constructor(private store: Store<MomentumStoreState>) {}
 
   public retrieveStatuses(
@@ -177,6 +184,102 @@ export class MomentumStoreFacade {
         }
 
         return employeesState.createLoadingState !== LoadingState.INIT;
+      })
+    );
+  }
+
+  public retrieveTasks(
+    retry?: boolean
+  ): Observable<MomentumStoreState['tasksState']> {
+    if (retry) {
+      this.store.dispatch(MomentumStoreActions.RetrieveTasks());
+    }
+
+    return this.selectTasksState$.pipe(
+      filter((departmentsState) => {
+        if (departmentsState.loadingState === LoadingState.INIT) {
+          this.store.dispatch(MomentumStoreActions.RetrieveTasks());
+        }
+
+        return departmentsState.loadingState !== LoadingState.INIT;
+      })
+    );
+  }
+
+  public retrieveTaskById(
+    taskId: number,
+    retry?: boolean
+  ): Observable<MomentumStoreState['tasksState']> {
+    if (retry) {
+      this.store.dispatch(
+        MomentumStoreActions.RetrieveCommentsByTaskId({ taskId })
+      );
+    }
+
+    return this.selectTasksState$.pipe(
+      filter((departmentsState) => {
+        if (departmentsState.loadingState === LoadingState.INIT) {
+          MomentumStoreActions.RetrieveCommentsByTaskId({ taskId });
+        }
+
+        return departmentsState.loadingState !== LoadingState.INIT;
+      })
+    );
+  }
+
+  public createTask(
+    taskCreateRequest: TaskCreateRequest,
+    retry?: boolean
+  ): Observable<MomentumStoreState['tasksState']> {
+    if (retry) {
+      this.store.dispatch(
+        MomentumStoreActions.CreateTask({
+          taskCreateRequest,
+        })
+      );
+    }
+
+    return this.selectTasksState$.pipe(
+      filter((employeesState) => {
+        if (employeesState.createLoadingState === LoadingState.INIT) {
+          this.store.dispatch(
+            MomentumStoreActions.CreateTask({
+              taskCreateRequest,
+            })
+          );
+        }
+
+        return employeesState.createLoadingState !== LoadingState.INIT;
+      })
+    );
+  }
+
+  public updateTask(
+    taskId: number,
+    taskUpdateRequest: TaskUpdateRequest,
+    retry?: boolean
+  ): Observable<MomentumStoreState['tasksState']> {
+    if (retry) {
+      this.store.dispatch(
+        MomentumStoreActions.UpdateTask({
+          taskId,
+          taskUpdateRequest,
+        })
+      );
+    }
+
+    return this.selectTasksState$.pipe(
+      filter((employeesState) => {
+        if (employeesState.updateLoadingState === LoadingState.INIT) {
+          this.store.dispatch(
+            MomentumStoreActions.UpdateTask({
+              taskId,
+              taskUpdateRequest,
+            })
+          );
+        }
+
+        return employeesState.updateLoadingState !== LoadingState.INIT;
       })
     );
   }

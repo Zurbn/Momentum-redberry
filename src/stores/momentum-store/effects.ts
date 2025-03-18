@@ -7,6 +7,7 @@ import { PriorityControllerService } from 'src/api/services/priorities/priority-
 import { DepartmentControllerService } from 'src/api/services/departments/department-controller.service';
 import { EmployeeControllerService } from 'src/api/services/employees/employee-controller.service';
 import { CommentControllerService } from 'src/api/services/comments/comment-controller.service';
+import { TaskControllerService } from 'src/api/services/tasks/task-controller.service';
 
 @Injectable()
 export class MomentumStoreEffects {
@@ -16,7 +17,8 @@ export class MomentumStoreEffects {
     private priorityControllerService: PriorityControllerService,
     private departmentControllerService: DepartmentControllerService,
     private employeeControllerService: EmployeeControllerService,
-    private commentControllerService: CommentControllerService
+    private commentControllerService: CommentControllerService,
+    private taskControllerService: TaskControllerService
   ) {}
 
   fetchStatuses$ = createEffect(() =>
@@ -144,6 +146,74 @@ export class MomentumStoreEffects {
             catchError((error) =>
               of(MomentumStoreActions.ErrorCreatingComment())
             )
+          );
+      })
+    )
+  );
+
+  fetchTasks$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MomentumStoreActions.RetrieveTasks),
+      switchMap(() => {
+        return this.taskControllerService.fetchAllTasks().pipe(
+          map((tasks) => {
+            return MomentumStoreActions.TasksRetrieved({
+              tasks,
+            });
+          }),
+          catchError((error) => of(MomentumStoreActions.ErrorRetrievingTasks()))
+        );
+      })
+    )
+  );
+
+  fetchTaskById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MomentumStoreActions.RetrieveCommentsByTaskId),
+      switchMap(({ taskId }) => {
+        return this.taskControllerService.fetchSingleTask(taskId).pipe(
+          map((task) => {
+            return MomentumStoreActions.TaskByIdRetrieved({
+              selectedTask: task,
+            });
+          }),
+          catchError((error) =>
+            of(MomentumStoreActions.ErrorRetrievingTaskById())
+          )
+        );
+      })
+    )
+  );
+
+  createTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MomentumStoreActions.CreateTask),
+      switchMap(({ taskCreateRequest }) => {
+        return this.taskControllerService.createTask(taskCreateRequest).pipe(
+          map((task) => {
+            return MomentumStoreActions.TaskCreated({
+              task,
+            });
+          }),
+          catchError((error) => of(MomentumStoreActions.ErrorCreatingTask()))
+        );
+      })
+    )
+  );
+
+  updateTask$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MomentumStoreActions.UpdateTask),
+      switchMap(({ taskId,taskUpdateRequest }) => {
+        return this.taskControllerService
+          .updateTaskStatus(taskId, taskUpdateRequest)
+          .pipe(
+            map((task) => {
+              return MomentumStoreActions.TaskCreated({
+                task,
+              });
+            }),
+            catchError((error) => of(MomentumStoreActions.ErrorCreatingTask()))
           );
       })
     )

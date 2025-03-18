@@ -5,6 +5,9 @@ import { EmployeeCreateRequest } from 'src/api/models/employee/requests/employee
 import { Employee } from 'src/api/models/employee/responses/employee.model';
 import { Priority } from 'src/api/models/priority/responses/priority.model';
 import { Status } from 'src/api/models/status/responses/status.model';
+import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-request.model';
+import { TaskUpdateRequest } from 'src/api/models/task/requests/task-update-request.model';
+import { Task } from 'src/api/models/task/responses/task.model';
 
 //! Statuses
 
@@ -82,34 +85,92 @@ export const ErrorRegisteringEmployee = createAction(
   '[Momentum] Error registering Employee'
 );
 
-//! Employees
+//! Comments
 
 //! Fetch
 export const RetrieveCommentsByTaskId = createAction(
-  '[Momentum] Retrieve all available Comments',
+  '[Momentum] Retrieve all available Comments for a task',
   props<{ taskId: number }>()
 );
 
 export const CommentsRetrieved = createAction(
-  '[Momentum] Successfully retrieved all available Comments',
+  '[Momentum] Successfully retrieved all available Comments for a task',
   props<{ comments: Comment[] }>()
 );
 
 export const ErrorRetrievingComments = createAction(
-  '[Momentum] Error retrieving all available Comments'
+  '[Momentum] Error retrieving all available Comments for a task'
 );
 
 //! Create
 export const CreateCommentForASpecificTask = createAction(
-  '[Momentum] Create Comment',
+  '[Momentum] Create Comment for a task',
   props<{ commentCreateRequest: CommentCreateRequest; taskId: number }>()
 );
 
 export const CommentCreated = createAction(
-  '[Momentum] Successfully registered Comment',
+  '[Momentum] Successfully registered Comment for a task',
   props<{ comment: Comment }>()
 );
 
 export const ErrorCreatingComment = createAction(
-  '[Momentum] Error registering Comment'
+  '[Momentum] Error registering Comment for a task'
 );
+
+//! Tasks
+
+//! Fetch ALL
+export const RetrieveTasks = createAction(
+  '[Momentum] Retrieve all available Tasks'
+);
+
+export const TasksRetrieved = createAction(
+  '[Momentum] Successfully retrieved all available Tasks',
+  props<{ tasks: Task[] }>()
+);
+
+export const ErrorRetrievingTasks = createAction(
+  '[Momentum] Error retrieving all available Tasks'
+);
+
+//! FETCH SINGLE
+
+export const RetrieveTaskById = createAction(
+  '[Momentum] Retrieve task by id',
+  props<{ taskId: number }>()
+);
+
+export const TaskByIdRetrieved = createAction(
+  '[Momentum] Successfully retrieved Task By Id',
+  props<{ selectedTask: Task }>()
+);
+
+export const ErrorRetrievingTaskById = createAction(
+  '[Momentum] Error retrieving Task By Id'
+);
+
+//! Create
+export const CreateTask = createAction(
+  '[Momentum] Create Task ',
+  props<{ taskCreateRequest: TaskCreateRequest }>()
+);
+
+export const TaskCreated = createAction(
+  '[Momentum] Successfully created Task',
+  props<{ task: Task }>()
+);
+
+export const ErrorCreatingTask = createAction('[Momentum] Error creating Task');
+
+//! Update
+export const UpdateTask = createAction(
+  '[Momentum] Update Task ',
+  props<{ taskId: number; taskUpdateRequest: TaskUpdateRequest }>()
+);
+
+export const TaskUpdated = createAction(
+  '[Momentum] Successfully created Task',
+  props<{ task: Task }>()
+);
+
+export const ErrorUpdatingTask = createAction('[Momentum] Error creating Task');
