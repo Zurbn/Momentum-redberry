@@ -9,10 +9,12 @@ import { MomentumAddANewTaskComponent } from './pages/momentum-add-a-new-task/mo
 import { MomentumHeaderComponent } from './core/components/momentum-header/momentum-header.component';
 import { MomentumTaskColumnComponent } from './core/components/momentum-task-column/momentum-task-column.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './modules/material.module';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { MomentumStoreModule } from 'src/stores/momentum-store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -27,10 +29,12 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     MomentumTaskColumnComponent,
     BrowserAnimationsModule,
-    MatButtonModule,
     ReactiveFormsModule,
     MaterialModule,
     HttpClientModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    MomentumStoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
