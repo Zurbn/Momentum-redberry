@@ -1,0 +1,29 @@
+<div class="upload">
+  <label for="fileInput" class="momentum-body--1">ავატარი*</label>
+
+  <input type="file" id="fileInput" (change)="onFileSelected($event)" hidden />
+
+  <div class="upload__container">
+    <div *ngIf="imageUrl" class="upload__image-container">
+      <img
+        [src]="imageUrl"
+        class="upload__image clickable"
+        (click)="triggerFileInput()"
+      />
+      <mat-icon
+        class="upload__remove clickable"
+        svgIcon="trashcan"
+        (click)="clearImage($event)"
+      ></mat-icon>
+    </div>
+
+    <div
+      *ngIf="!imageUrl"
+      class="upload-placeholder d-flex flex-column align-items-center justify-content-center clickable"
+      (click)="triggerFileInput()"
+    >
+      <mat-icon svgIcon="gallery" class="mb-2"></mat-icon>
+      <span>ატვირთე ფოტო</span>
+    </div>
+  </div>
+</div>
