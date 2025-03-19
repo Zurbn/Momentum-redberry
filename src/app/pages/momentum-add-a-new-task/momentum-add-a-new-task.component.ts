@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { filter, forkJoin, map, take } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { combineLatest, filter, forkJoin, map, take } from 'rxjs';
 import { Department } from 'src/api/models/department/responses/department.model';
 import { Employee } from 'src/api/models/employee/responses/employee.model';
 import { Priority } from 'src/api/models/priority/responses/priority.model';
 import { Status } from 'src/api/models/status/responses/status.model';
 import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-request.model';
+import { MomentumAddEmployeeDialogComponent } from 'src/app/core/components/momentum-add-employee-dialog/momentum-add-employee-dialog.component';
 import { AddATaskFormData } from 'src/app/core/models/add-a-task-form-data.model';
 import { LoadingState } from 'src/app/core/models/loading-state.model';
 import { PriorityEnum } from 'src/app/core/models/priority.enum';
@@ -77,13 +79,14 @@ export class MomentumAddANewTaskComponent {
       }
       return departmentsState.loadingState === LoadingState.LOADED;
     }),
-    take(1),
     map((departmentsState) => departmentsState.employees)
   );
 
   constructor(
     private fb: FormBuilder,
-    private momentumStoreFacade: MomentumStoreFacade
+    private momentumStoreFacade: MomentumStoreFacade,
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {
     this.initializeForm();
   }
@@ -127,7 +130,7 @@ export class MomentumAddANewTaskComponent {
   }
 
   private retrieveFormDynamicData(): void {
-    forkJoin([
+    combineLatest([
       this.priorities$,
       this.statuses$,
       this.departments$,
@@ -137,6 +140,7 @@ export class MomentumAddANewTaskComponent {
       this.statuses = statuses;
       this.departments = departments;
       this.employees = employees;
+      this.cdr.detectChanges()
       console.log(employees);
     });
   }
@@ -162,5 +166,14 @@ export class MomentumAddANewTaskComponent {
         console.log(registrationResponse);
         localStorage.setItem('addANewTaskData', null);
       });
+  }
+
+  addEmployee() {
+    this.dialog.open(MomentumAddEmployeeDialogComponent, {
+      panelClass: 'ha-mat-dialog-panel',
+      maxWidth: '100%',
+      width: '913px',
+      height: '800px',
+    });
   }
 }

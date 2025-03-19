@@ -174,7 +174,9 @@
                 appearance="outline"
               >
                 <mat-select formControlName="assignedTo">
-                  <mat-option class="d-flex align-items-center"
+                  <mat-option
+                    class="d-flex align-items-center"
+                    (click)="addEmployee()"
                     ><mat-icon
                       class="momentum-icon momentum-icon--18 d-flex justify-content-center align-items-center mr-2"
                       [svgIcon]="'plus-circle'"
@@ -183,6 +185,7 @@
                       >დაამატე თანამშრომელი</span
                     >
                   </mat-option>
+                  {{ employees?.length }}
                   <mat-option
                     *ngFor="
                       let employee of employees
@@ -190,9 +193,11 @@
                     "
                     [value]="employee.id"
                   >
-                    <img [src]="employee.avatar" alt="" class="mr-2" />{{
-                      employee.name
-                    }}</mat-option
+                    <img
+                      [src]="employee.avatar"
+                      alt=""
+                      class="add-a-task__employee-image mr-2"
+                    />{{ employee.name }}</mat-option
                   >
                 </mat-select>
               </mat-form-field>
@@ -226,6 +231,7 @@
           class="add-a-task__submit momentum-body-2 momentum-button momentum-button--primary"
           id="add-a-task__submit"
           mat-button
+          [disabled]="addATaskForm.invalid"
           (click)="handleSubmit()"
         >
           დავალების შექმნა

@@ -127,22 +127,35 @@ export const MomentumStoreReducer = createReducer(
     };
   }),
 
-  on(MomentumStoreActions.RegisterEmployee, (state) => {
-    return {
-      ...state,
-      employeesState: {
-        ...state.employeesState,
-        registerLoadingState: LoadingState.LOADING,
-      },
-    };
-  }),
+  on(
+    MomentumStoreActions.RegisterEmployee,
+    (state, { employeeCreateRequest }) => {
+      return {
+        ...state,
+        employeesState: {
+          ...state.employeesState,
+          registerLoadingState: LoadingState.LOADING,
+          departmentDuringRegistration: state.departmentsState.departments.find(
+            (department) =>
+              department?.id === employeeCreateRequest?.department_id
+          ),
+        },
+      };
+    }
+  ),
   on(MomentumStoreActions.EmployeeRegistered, (state, { employee }) => {
     return {
       ...state,
       employeesState: {
         ...state.employeesState,
         registerLoadingState: LoadingState.LOADING,
-        employees: [...(state?.employeesState?.employees || []), employee],
+        employees: [
+          ...(state?.employeesState?.employees || []),
+          {
+            ...employee,
+            department: state.employeesState.departmentDuringRegistration,
+          },
+        ],
       },
     };
   }),

@@ -40,16 +40,12 @@
     max-width: 19.875rem;
   }
 
-  &__rule {
-    color: #6c757d;
-    &--invalid {
-      color: #fa4d4d;
-    }
-    &--success {
-      color: #08a508;
-    }
-  }
   &__dropdown-icon {
     margin-right: 0.375rem;
+  }
+  &__employee-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
   }
 }

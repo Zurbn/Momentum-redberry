@@ -26,6 +26,7 @@ export interface MomentumStoreState {
   employeesState: {
     loadingState: LoadingState;
     registerLoadingState: LoadingState;
+    departmentDuringRegistration: Department;
     employees: Employee[];
   };
   commentsState: {
@@ -60,6 +61,7 @@ export const initialMomentumState: MomentumStoreState = {
   employeesState: {
     loadingState: LoadingState.INIT,
     registerLoadingState: LoadingState.INIT,
+    departmentDuringRegistration: null,
     employees: null,
   },
   commentsState: {

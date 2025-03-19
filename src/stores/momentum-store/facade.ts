@@ -113,23 +113,14 @@ export class MomentumStoreFacade {
   }
 
   public registerEmployee(
-    employeeCreateRequest: EmployeeCreateRequest,
-    retry?: boolean
+    employeeCreateRequest: EmployeeCreateRequest
   ): Observable<MomentumStoreState['employeesState']> {
-    if (retry) {
-      this.store.dispatch(
-        MomentumStoreActions.RegisterEmployee({ employeeCreateRequest })
-      );
-    }
+    this.store.dispatch(
+      MomentumStoreActions.RegisterEmployee({ employeeCreateRequest })
+    );
 
     return this.selectEmployeesState$.pipe(
       filter((employeesState) => {
-        if (employeesState.registerLoadingState === LoadingState.INIT) {
-          this.store.dispatch(
-            MomentumStoreActions.RegisterEmployee({ employeeCreateRequest })
-          );
-        }
-
         return employeesState.registerLoadingState !== LoadingState.INIT;
       })
     );
