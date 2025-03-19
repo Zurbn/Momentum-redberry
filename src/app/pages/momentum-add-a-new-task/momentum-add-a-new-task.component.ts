@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { combineLatest, filter, forkJoin, map, take } from 'rxjs';
 import { Department } from 'src/api/models/department/responses/department.model';
 import { Employee } from 'src/api/models/employee/responses/employee.model';
@@ -86,7 +87,7 @@ export class MomentumAddANewTaskComponent {
     private fb: FormBuilder,
     private momentumStoreFacade: MomentumStoreFacade,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private router: Router
   ) {
     this.initializeForm();
   }
@@ -140,7 +141,6 @@ export class MomentumAddANewTaskComponent {
       this.statuses = statuses;
       this.departments = departments;
       this.employees = employees;
-      this.cdr.detectChanges()
       console.log(employees);
     });
   }
@@ -163,7 +163,7 @@ export class MomentumAddANewTaskComponent {
         )
       )
       .subscribe((registrationResponse) => {
-        console.log(registrationResponse);
+        this.router.navigate(['']);
         localStorage.setItem('addANewTaskData', null);
       });
   }
