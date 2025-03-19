@@ -1,0 +1,19 @@
+@use "/src/styles/typography";
+@use "/src/styles/common";
+
+.add-employee {
+  padding: 117px 50px 60px 50px;
+  position: relative;
+  &__department {
+    max-width: 384px;
+    margin-bottom: 42px;
+  }
+  &__close {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    transform: translate(50%, -50%);
+  }
+}

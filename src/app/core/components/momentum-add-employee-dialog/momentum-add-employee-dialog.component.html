@@ -1,0 +1,128 @@
+<div class="add-employee d-flex flex-column">
+  <mat-icon
+    svgIcon="close-circle"
+    class="add-employee__close clickable"
+    (click)="closeDialog()"
+  ></mat-icon>
+  <h2
+    class="add-employee__heading momentum-heading momentum-heading--2 align-self-center mb-5"
+  >
+    თანამშრომლის დამატება
+  </h2>
+  <form [formGroup]="employeeForm" class="add-employee__form">
+    <div class="add-employee__inputs d-flex w-100">
+      <div
+        *ngIf="
+          employeeForm.get('name') | getAppRulesState : formValue as colorStyle
+        "
+        class="w-100 mr-5 mb-5"
+      >
+        <mat-label class="add-a-task__label momentum-body--1"
+          >სახელი*</mat-label
+        >
+        <mat-form-field
+          appearance="outline"
+          class="add-a-task__name d-flex flex-column momentum-form-field momentum-form-field--45"
+        >
+          <input
+            matInput
+            type="text"
+            formControlName="name"
+            name="name"
+            class="momentum-input momentum-input--45"
+          />
+        </mat-form-field>
+        <div class="add-a-task__rules d-flex flex-column gap gap--2 mt-1">
+          <span
+            class="add-a-task__rule d-flex gap gap--2"
+            *ngFor="let rules of VALIDATION_RULES"
+            [ngClass]="colorStyle"
+          >
+            <mat-icon
+              svgIcon="check"
+              class="momentum-icon momentum-icon--16"
+            ></mat-icon>
+            {{ rules }}
+          </span>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          employeeForm.get('surname')
+            | getAppRulesState : formValue as colorStyle
+        "
+        class="w-100"
+      >
+        <mat-label class="add-a-task__label momentum-body--1">გვარი*</mat-label>
+        <mat-form-field
+          appearance="outline"
+          class="add-a-task__surname d-flex flex-column momentum-form-field momentum-form-field--45"
+        >
+          <input
+            matInput
+            type="text"
+            formControlName="surname"
+            name="surname"
+            class="momentum-input momentum-input--45"
+          />
+        </mat-form-field>
+        <div class="add-a-task__rules d-flex flex-column gap gap--2 mt-1">
+          <span
+            class="add-a-task__rule d-flex gap gap--2"
+            *ngFor="let rules of VALIDATION_RULES"
+            [ngClass]="colorStyle"
+          >
+            <mat-icon
+              svgIcon="check"
+              class="momentum-icon momentum-icon--16"
+            ></mat-icon>
+            {{ rules }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <app-momentum-upload-component
+      class="d-block mb-5"
+      [formControl]="avatarFormControl"
+    ></app-momentum-upload-component>
+
+    <div class="add-employee__department d-flex flex-column">
+      <mat-label class="add-employee__label momentum-body--1 mb-1"
+        >დეპარტამენტი*</mat-label
+      >
+      <mat-form-field
+        class="momentum-form-field momentum-form-field--45"
+        appearance="outline"
+      >
+        <mat-select formControlName="department_id">
+          <mat-option
+            *ngFor="let department of departments"
+            [value]="department.id"
+            >{{ department.name }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-end">
+      <button
+        class="momentum-button momentum-button--secondary momentum-body--1 mb-0 clickable"
+        mat-button
+        (click)="closeDialog()"
+      >
+        გაუქმება
+      </button>
+
+      <button
+        routerLink="add-new-task"
+        class="momentum-button momentum-button--primary momentum-body--1 clickable ml-4 mb-0"
+        mat-button
+        [disabled]="employeeForm.invalid"
+        (click)="addEmployee()"
+      >
+        დაამატე თანამშრომელი
+      </button>
+    </div>
+  </form>
+</div>

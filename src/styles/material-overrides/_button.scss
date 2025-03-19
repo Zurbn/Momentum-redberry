@@ -18,6 +18,10 @@
       &--primary {
         background-color: constants.$momentum-color-primary;
         color: constants.$momentum-color-light;
+        &:disabled{
+          color: constants.$momentum-color-light;
+          background-color: #B588F4;
+        }
       }
       &--secondary {
         border: 0.0625rem solid constants.$momentum-color-primary;

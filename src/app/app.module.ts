@@ -18,6 +18,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { GetRulesStatePipe } from './core/pipes/get-rules-state.pipe';
 import { GetPriorityDataPipe } from './core/pipes/getPriorityData.pipe';
 import { FilterEmployeesByDepartmentPipe } from './core/pipes/filterEmployeesByDepartment.pipe';
+import { MomentumAddEmployeeDialogComponent } from './core/components/momentum-add-employee-dialog/momentum-add-employee-dialog.component';
+import { MomentumUploadComponentComponent } from './core/components/momentum-upload-component/momentum-upload-component.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { FilterEmployeesByDepartmentPipe } from './core/pipes/filterEmployeesByD
     MomentumDetailsPageComponent,
     MomentumAddANewTaskComponent,
     MomentumHeaderComponent,
+    MomentumAddEmployeeDialogComponent,
+    MomentumUploadComponentComponent,
   ],
   imports: [
     BrowserModule,

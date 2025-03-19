@@ -32,10 +32,27 @@ export class EmployeeControllerService {
   public addNewEmployee(
     employeeCreateRequest: EmployeeCreateRequest
   ): Observable<Employee> {
+    const formData = new FormData();
+
+    formData.append('name', employeeCreateRequest.name);
+    formData.append('surname', employeeCreateRequest.surname);
+    formData.append(
+      'department_id',
+      employeeCreateRequest.department_id.toString()
+    );
+
+    if (employeeCreateRequest.avatar instanceof File) {
+      formData.append('avatar', employeeCreateRequest.avatar);
+    }
+    const headers = new HttpHeaders({
+      Accept: 'application/json',
+      Authorization: `Bearer ${environment.momentumAuthToken}`,
+    });
+
     return this.httpClient.post<Employee>(
       `${this.baseUrl}/employees`,
-      employeeCreateRequest,
-      this.headers
+      formData,
+      { headers }
     );
   }
 }
