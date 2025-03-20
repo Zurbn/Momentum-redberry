@@ -154,34 +154,47 @@ export class MomentumStoreEffects {
   fetchTasks$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MomentumStoreActions.RetrieveTasks),
-      switchMap(() => {
-        return this.taskControllerService.fetchAllTasks().pipe(
-          map((tasks) => {
-            return MomentumStoreActions.TasksRetrieved({
-              tasks,
-            });
-          }),
-          catchError((error) => of(MomentumStoreActions.ErrorRetrievingTasks()))
-        );
-      })
+      switchMap(() =>
+        this.taskControllerService.fetchAllTasks().pipe(
+          switchMap((tasks) =>
+            forkJoin(
+              tasks.map((task) =>
+                this.commentControllerService
+                  .fetchAllComments(task.id)
+                  .pipe(map((comments) => ({ ...task, comments })))
+              )
+            )
+          ),
+          map((tasksWithComments) =>
+            MomentumStoreActions.TasksRetrieved({ tasks: tasksWithComments })
+          ),
+          catchError(() => of(MomentumStoreActions.ErrorRetrievingTasks()))
+        )
+      )
     )
   );
 
   fetchTaskById$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MomentumStoreActions.RetrieveCommentsByTaskId),
-      switchMap(({ taskId }) => {
-        return this.taskControllerService.fetchSingleTask(taskId).pipe(
-          map((task) => {
-            return MomentumStoreActions.TaskByIdRetrieved({
-              selectedTask: task,
-            });
-          }),
-          catchError((error) =>
-            of(MomentumStoreActions.ErrorRetrievingTaskById())
-          )
-        );
-      })
+      switchMap(({ taskId }) =>
+        this.taskControllerService.fetchSingleTask(taskId).pipe(
+          switchMap((task) =>
+            this.commentControllerService.fetchAllComments(task.id).pipe(
+              map((comments) => ({
+                ...task,
+                comments,
+              }))
+            )
+          ),
+          map((taskWithComments) =>
+            MomentumStoreActions.TaskByIdRetrieved({
+              selectedTask: taskWithComments,
+            })
+          ),
+          catchError(() => of(MomentumStoreActions.ErrorRetrievingTaskById()))
+        )
+      )
     )
   );
 
@@ -204,7 +217,7 @@ export class MomentumStoreEffects {
   updateTask$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MomentumStoreActions.UpdateTask),
-      switchMap(({ taskId,taskUpdateRequest }) => {
+      switchMap(({ taskId, taskUpdateRequest }) => {
         return this.taskControllerService
           .updateTaskStatus(taskId, taskUpdateRequest)
           .pipe(

@@ -1,41 +1,47 @@
-<div class="card-container">
+<div
+  class="card"
+  [ngStyle]="{ 'border-color': color }"
+  [routerLink]="['/details', task?.id]"
+>
   <div class="d-flex justify-content-between align-items-center">
-    <div class="d-flex task-type">
+    <div class="d-flex card__tags">
       <div
-        class="priority d-flex align-items-center justify-content-center"
-        *ngIf="momentumTaskCardData.priority | getPriorityColor as prioObject"
+        class="card__priority d-flex align-items-center justify-content-center ellipsis mr-2"
+        *ngIf="task.priority"
         [ngStyle]="{
-          color: prioObject.color,
-          'border-color': prioObject.icon
+          color: priorityColors[task.priority.id - 1],
+          'border-color': priorityColors[task.priority.id - 1]
         }"
       >
-        <img src="{{ prioObject.icon }}" alt="" />
-        {{ momentumTaskCardData.priority }}
+        <img [src]="task.priority.icon" alt="status" />
+        <span class="ml-1">{{ task.priority.name }}</span>
       </div>
+
       <div
-        class="task-category d-flex align-items-center justify-content-center"
+        class="card__department d-flex align-items-center justify-content-center"
         [ngStyle]="{
-          'background-color':
-            momentumTaskCardData.department | getDepartmentColor
+          'background-color': departmentColors[task.department.id - 1]
         }"
       >
-        {{ momentumTaskCardData.department }}
+        <div class="ellipsis">{{ task.department.name }}</div>
       </div>
     </div>
-    <div class="card-date">{{ momentumTaskCardData.date }}</div>
+
+    <div class="card__date">{{ task.due_date | date : "d MMM, yyyy" }}</div>
   </div>
-  <div class="card-body d-flex flex-column">
-    <div class="card-name">{{ momentumTaskCardData.title }}</div>
-    <div class="card-description">
-      {{ momentumTaskCardData.description }}
+  <div class="card__body d-flex flex-column">
+    <div class="card__name">{{ task.name }}</div>
+    <div class="card__description ellipsis">
+      {{ task.description }}
     </div>
   </div>
-  <div class="d-flex justify-content-between">
-    <img src="{{ momentumTaskCardData.picture }}" alt="" />
+  <div
+    class="d-flex justify-content-between align-items-center justify-self-end mt-3"
+  >
+    <img class="card__image" src="{{ task.employee.avatar }}" alt="avatar" />
     <div class="d-flex">
-      <!--  /> -->
       <div><img src="/assets/icons/comment-icon.svg" alt="" /></div>
-      <div>{{ momentumTaskCardData.numberOfComments }}</div>
+      <div class="ml-1">{{ task?.comments?.length || 0 }}</div>
     </div>
   </div>
 </div>

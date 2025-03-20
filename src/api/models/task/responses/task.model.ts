@@ -13,3 +13,7 @@ export interface Task {
   department: Department;
   employee: Employee;
 }
+
+export interface TaskWithComments extends Task {
+  comments?: Comment[];
+}

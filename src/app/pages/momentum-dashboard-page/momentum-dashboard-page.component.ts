@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-request.model';
-import { TaskControllerService } from 'src/api/services/tasks/task-controller.service';
-import { StatusControllerService } from 'src/api/services/statuses/status-controller.service';
-import { PriorityControllerService } from 'src/api/services/priorities/priority-controller.service';
-import { EmployeeControllerService } from 'src/api/services/employees/employee-controller.service';
-import { DepartmentControllerService } from 'src/api/services/departments/department-controller.service';
-import { CommentControllerService } from 'src/api/services/comments/comment-controller.service';
+import { MomentumStoreFacade } from 'src/stores/momentum-store/facade';
+import { Status } from 'src/api/models/status/responses/status.model';
+import { combineLatest, filter, map } from 'rxjs';
+import { LoadingState } from 'src/app/core/models/loading-state.model';
+import { Task } from 'src/api/models/task/responses/task.model';
+import { Department } from 'src/api/models/department/responses/department.model';
+import { Priority } from 'src/api/models/priority/responses/priority.model';
+import { Employee } from 'src/api/models/employee/responses/employee.model';
 
 @Component({
   selector: 'app-momentum-dashboard-page',
@@ -13,14 +14,138 @@ import { CommentControllerService } from 'src/api/services/comments/comment-cont
   styleUrls: ['./momentum-dashboard-page.component.scss'],
 })
 export class MomentumDashboardPageComponent {
-  constructor(
-    private taskControllerService: TaskControllerService,
-    private statusControllerService: StatusControllerService,
-    private priorityControllerService: PriorityControllerService,
-    private employeeControllerService: EmployeeControllerService,
-    private departmentControllerService: DepartmentControllerService,
-    private commentControllerService: CommentControllerService
-  ) {}
+  public statuses: Status[];
+  public priorities: Priority[];
+  public tasks: Task[];
+  public departments: Department[];
+  public employees: Employee[];
 
-  ngOnInit(): void {}
+  public chosenDepartments = [];
+  public chosenPriorities = [];
+  public chosenEmployees = [];
+  public chosenFilters = [];
+  public latestFilters = [];
+
+  constructor(private momentumStoreFacade: MomentumStoreFacade) {}
+
+  ngOnInit(): void {
+    this.retrieveStatusesAndTasks();
+  }
+
+  readyToBeFiltered;
+
+  private retrieveStatusesAndTasks(): void {
+    const statuses$ = this.momentumStoreFacade.retrieveStatuses().pipe(
+      filter(
+        (statusesState) => statusesState.loadingState !== LoadingState.LOADING
+      ),
+      map((statusesState) => statusesState.statuses)
+    );
+
+    const priorities$ = this.momentumStoreFacade.retrievePriorities().pipe(
+      filter(
+        (prioritiesState) =>
+          prioritiesState.loadingState !== LoadingState.LOADING
+      ),
+      map((prioritiesState) => prioritiesState.priorities)
+    );
+
+    const employees$ = this.momentumStoreFacade.retrieveEmployees().pipe(
+      filter(
+        (employeesState) => employeesState.loadingState !== LoadingState.LOADING
+      ),
+      map((employeesState) => employeesState.employees)
+    );
+
+    const tasks$ = this.momentumStoreFacade.retrieveTasks().pipe(
+      filter((tasksState) => tasksState.loadingState !== LoadingState.LOADING),
+      map((tasksState) => tasksState.tasks)
+    );
+
+    const departments$ = this.momentumStoreFacade.retrieveDepartments().pipe(
+      filter((tasksState) => tasksState.loadingState !== LoadingState.LOADING),
+      map((tasksState) => tasksState.departments)
+    );
+
+    combineLatest([
+      tasks$,
+      statuses$,
+      priorities$,
+      departments$,
+      employees$,
+    ]).subscribe(([tasks, statuses, priorities, departments, employees]) => {
+      this.statuses = statuses;
+      this.priorities = priorities;
+      this.tasks = tasks;
+      this.departments = departments;
+      this.employees = employees;
+    });
+  }
+
+  chooseFilter(
+    filter: any,
+    filterType: 'department' | 'employee' | 'priority',
+    deletingFilter?: boolean
+  ) {
+    console.log('opaa');
+    let chosenArray;
+
+    // Choose the correct array to update based on filterType
+    switch (filterType) {
+      case 'department':
+        chosenArray = this.chosenDepartments;
+        break;
+      case 'employee':
+        chosenArray = this.chosenEmployees;
+        break;
+      case 'priority':
+        chosenArray = this.chosenPriorities;
+        break;
+      default:
+        throw new Error('Invalid filter type');
+    }
+
+    // Add or remove the filter from the chosen array
+    const index = chosenArray.indexOf(
+      chosenArray?.find((item) => item?.name == filter?.name)
+    );
+    console.log(index);
+    if (index > -1) {
+      // If the filter already exists, remove it (pop it)
+      chosenArray.splice(index, 1);
+      if (deletingFilter) {
+        const indexInChosenFilters = this.chosenFilters.indexOf(filter);
+        this.chosenFilters.splice(indexInChosenFilters, 1);
+      }
+    } else {
+      // If the filter doesn't exist, add it (push it)
+      chosenArray.push(filter);
+    }
+  }
+
+  applyFilters() {
+    this.chosenFilters = [
+      ...this.chosenDepartments.map((departments) => ({
+        ...departments,
+        type: 'department',
+      })),
+      ...this.chosenEmployees.map((employee) => ({
+        ...employee,
+        type: 'employee',
+      })),
+      ...this.chosenPriorities.map((priorities) => ({
+        ...priorities,
+        type: 'priority',
+      })),
+    ];
+    this.latestFilters = this.chosenFilters;
+    this.readyToBeFiltered = true;
+  }
+
+  clearFilters() {
+    this.chosenFilters = [];
+    this.chosenDepartments = [];
+    this.chosenEmployees = [];
+    this.chosenPriorities = [];
+  }
 }

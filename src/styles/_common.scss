@@ -34,3 +34,9 @@ mat-icon.momentum-icon {
 .success {
   color: #08a508;
 }
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

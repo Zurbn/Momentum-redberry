@@ -1,0 +1,6 @@
+@mixin material-checkbox-overrides {
+  .mat-mdc-checkbox{
+    display: flex;
+    align-items: center;
+  }
+}

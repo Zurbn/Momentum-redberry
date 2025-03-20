@@ -15,16 +15,23 @@
       border-radius: 0.3125rem;
       min-height: 40px;
 
-      &--primary {
+      &--primary,
+      &--primary-round {
         background-color: constants.$momentum-color-primary;
         color: constants.$momentum-color-light;
-        &:disabled{
+        &:disabled {
           color: constants.$momentum-color-light;
-          background-color: #B588F4;
+          background-color: #b588f4;
         }
       }
       &--secondary {
         border: 0.0625rem solid constants.$momentum-color-primary;
+      }
+
+      &--primary-round.mdc-button {
+        border-radius: 20px;
+        height: 35px;
+        width: 155px;
       }
     }
   }

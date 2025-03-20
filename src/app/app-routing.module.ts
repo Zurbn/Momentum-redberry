@@ -6,7 +6,7 @@ import { MomentumAddANewTaskComponent } from './pages/momentum-add-a-new-task/mo
 
 const routes: Routes = [
   { path: '', component: MomentumDashboardPageComponent },
-  { path: 'details', component: MomentumDetailsPageComponent },
+  { path: 'details/:id', component: MomentumDetailsPageComponent },
   { path: 'add-new-task', component: MomentumAddANewTaskComponent },
 ];
 

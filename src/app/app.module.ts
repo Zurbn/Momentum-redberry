@@ -20,6 +20,8 @@ import { GetPriorityDataPipe } from './core/pipes/getPriorityData.pipe';
 import { FilterEmployeesByDepartmentPipe } from './core/pipes/filterEmployeesByDepartment.pipe';
 import { MomentumAddEmployeeDialogComponent } from './core/components/momentum-add-employee-dialog/momentum-add-employee-dialog.component';
 import { MomentumUploadComponentComponent } from './core/components/momentum-upload-component/momentum-upload-component.component';
+import { GetTasksByStatusPipe } from './core/pipes/getTasksByStatus.pipe';
+import { MomentumTaskCardComponent } from './core/components/momentum-task-card/momentum-task-card.component';
 
 @NgModule({
   declarations: [
@@ -30,11 +32,12 @@ import { MomentumUploadComponentComponent } from './core/components/momentum-upl
     MomentumHeaderComponent,
     MomentumAddEmployeeDialogComponent,
     MomentumUploadComponentComponent,
+    MomentumTaskColumnComponent,
+    MomentumTaskCardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MomentumTaskColumnComponent,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialModule,
@@ -45,6 +48,7 @@ import { MomentumUploadComponentComponent } from './core/components/momentum-upl
     GetRulesStatePipe,
     GetPriorityDataPipe,
     FilterEmployeesByDepartmentPipe,
+    GetTasksByStatusPipe,
   ],
   providers: [],
   bootstrap: [AppComponent],

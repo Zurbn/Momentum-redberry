@@ -7,7 +7,7 @@ import { Priority } from 'src/api/models/priority/responses/priority.model';
 import { Status } from 'src/api/models/status/responses/status.model';
 import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-request.model';
 import { TaskUpdateRequest } from 'src/api/models/task/requests/task-update-request.model';
-import { Task } from 'src/api/models/task/responses/task.model';
+import { Task, TaskWithComments } from 'src/api/models/task/responses/task.model';
 
 //! Statuses
 
@@ -142,7 +142,7 @@ export const RetrieveTaskById = createAction(
 
 export const TaskByIdRetrieved = createAction(
   '[Momentum] Successfully retrieved Task By Id',
-  props<{ selectedTask: Task }>()
+  props<{ selectedTask: TaskWithComments }>()
 );
 
 export const ErrorRetrievingTaskById = createAction(
@@ -170,7 +170,7 @@ export const UpdateTask = createAction(
 
 export const TaskUpdated = createAction(
   '[Momentum] Successfully updated Task',
-  props<{ task: Task }>()
+  props<{ task: TaskWithComments }>()
 );
 
 export const ErrorUpdatingTask = createAction('[Momentum] Error updating Task');

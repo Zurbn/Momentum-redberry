@@ -7,9 +7,13 @@
 @import "select";
 @import "form-field";
 @import "button";
+@import "menu";
+@import "checkbox";
 
 @mixin material-component-overrides() {
   @include material-form-field-overrides;
   @include material-select-overrides;
   @include material-button-overrides;
+  @include material-menu-overrides;
+  @include material-checkbox-overrides;
 }

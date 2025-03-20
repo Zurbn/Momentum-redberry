@@ -1,0 +1,11 @@
+@mixin material-menu-overrides {
+  .mat-mdc-menu-panel {
+    width: 688px;
+    height: 274px;
+    max-width: 100% !important;
+    border-radius: 10px;
+    & .mat-mdc-menu-content {
+      padding: 40px 30px 0 30px;
+    }
+  }
+}

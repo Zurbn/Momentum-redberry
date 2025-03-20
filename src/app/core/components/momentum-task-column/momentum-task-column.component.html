@@ -1,14 +1,17 @@
-<div class="tasks-container d-flex">
-  <div *ngFor="let category of categories">
-    <div
-      [ngStyle]="{ 'background-color': category.color }"
-      class="task-progress d-flex align-items-center justify-content-center"
-    >
-      {{ category.name }}
-    </div>
+<div class="column">
+  <div
+    class="task-progress d-flex align-items-center justify-content-center"
+    [ngStyle]="{ 'background-color': columnColorMapping[status?.id - 1] }"
+  >
+    {{ status.name }}
+  </div>
+
+  <div class="column__cards">
     <app-momentum-task-card
-      [momentumTaskCardData]="task"
+      class="clickable"
       *ngFor="let task of tasks"
+      [task]="task"
+      [color]="columnColorMapping[status?.id - 1]"
     ></app-momentum-task-card>
   </div>
 </div>

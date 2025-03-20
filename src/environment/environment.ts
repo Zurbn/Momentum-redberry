@@ -1,4 +1,4 @@
 export const environment = {
   momentumBaseUrl: 'https://momentum.redberryinternship.ge/api',
-  momentumAuthToken: '9e747688-6597-441e-8d29-21174da97239',
+  momentumAuthToken: '9e79be40-968b-496c-b624-3a043c131763',
 };
