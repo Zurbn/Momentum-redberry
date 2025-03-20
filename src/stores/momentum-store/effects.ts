@@ -176,7 +176,7 @@ export class MomentumStoreEffects {
 
   fetchTaskById$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(MomentumStoreActions.RetrieveCommentsByTaskId),
+      ofType(MomentumStoreActions.RetrieveTaskById),
       switchMap(({ taskId }) =>
         this.taskControllerService.fetchSingleTask(taskId).pipe(
           switchMap((task) =>
@@ -222,7 +222,7 @@ export class MomentumStoreEffects {
           .updateTaskStatus(taskId, taskUpdateRequest)
           .pipe(
             map((task) => {
-              return MomentumStoreActions.TaskCreated({
+              return MomentumStoreActions.TaskUpdated({
                 task,
               });
             }),

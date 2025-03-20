@@ -16,7 +16,7 @@ export class GetTasksByStatusPipe implements PipeTransform {
       type: 'department' | 'employee' | 'priority';
     }[]
   ): Task[] {
-    const filterByStatus = tasks.filter(
+    const filterByStatus = tasks?.filter(
       (task) => task?.status?.id === status?.id
     );
 

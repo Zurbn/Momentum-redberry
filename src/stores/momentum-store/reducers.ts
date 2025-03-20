@@ -269,7 +269,7 @@ export const MomentumStoreReducer = createReducer(
       ...state,
       tasksState: {
         ...state.tasksState,
-        loadingState: LoadingState.LOADING,
+        singleCardLoadingState: LoadingState.LOADING,
         selectedTask: null,
       },
     };
@@ -279,7 +279,7 @@ export const MomentumStoreReducer = createReducer(
       ...state,
       tasksState: {
         ...state.tasksState,
-        loadingState: LoadingState.LOADED,
+        singleCardLoadingState: LoadingState.LOADED,
         selectedTask,
       },
     };
@@ -289,7 +289,7 @@ export const MomentumStoreReducer = createReducer(
       ...state,
       tasksState: {
         ...state.tasksState,
-        loadingState: LoadingState.ERROR,
+        singleCardLoadingState: LoadingState.ERROR,
         selectedTask: null,
       },
     };
@@ -339,10 +339,13 @@ export const MomentumStoreReducer = createReducer(
       tasksState: {
         ...state.tasksState,
         updateLoadingState: LoadingState.LOADED,
-        tasks: [...(state?.tasksState?.tasks || []), task],
+        tasks: state.tasksState.tasks.map((t) =>
+          t.id === task.id ? { ...t, ...task } : t
+        ),
       },
     };
   }),
+
   on(MomentumStoreActions.ErrorUpdatingTask, (state) => {
     return {
       ...state,

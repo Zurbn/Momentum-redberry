@@ -1,1 +1,171 @@
-<p>momentum-details-page works!</p>
+<div class="task-inner-page d-flex">
+  <div class="task-inner-page__left d-flex flex-column">
+    <div class="task-inner-page__left-type d-flex">
+      <div class="priority d-flex align-items-center justify-content-center">
+        <img
+          src="/assets/icons/middle-icon.svg"
+          alt=""
+          class="priority__icon"
+        />
+        {{ task?.priority?.name }}
+      </div>
+      <div class="category d-flex justify-content-center align-items-center">
+        {{ task?.department?.name }}
+      </div>
+    </div>
+    <div class="task-inner-page__task-title">
+      Redberry-ს საიტის ლენდინგის დიზაინი
+    </div>
+    <div class="task-inner-page__task-description">
+      მიზანია რომ შეიქმნას თანამედროვე, სუფთა და ფუნქციონალური დიზაინი, რომელიც
+      უზრუნველყოფს მარტივ ნავიგაციას და მკაფიო ინფორმაციის გადაცემას. დიზაინი
+      უნდა იყოს ადაპტირებადი (responsive), გამორჩეული ვიზუალით, მინიმალისტური
+      სტილით და ნათელი ტიპოგრაფიით.
+    </div>
+    <div class="task-inner-page__details">
+      <div class="task-inner-page__details-title">დავალების დეტალები</div>
+      <div class="task-inner-page__details-info">
+        <div class="task-inner-page__details-info-status d-flex">
+          <div class="d-flex gap-6 width align-items-center padding">
+            <!-- <img
+              class="task-inner-page__details-info-icon"
+              src="/assets/icons/pie-chart.svg"
+              alt=""
+            /> -->
+            <div class="titles">სტატუსი</div>
+          </div>
+          <div class="add-a-task__department d-flex flex-column">
+            <mat-form-field
+              class="momentum-form-field momentum-form-field--45"
+              appearance="outline"
+            >
+              <mat-select [value]="task?.status?.id">
+                <mat-option
+                  *ngFor="let department of departments"
+                  [value]="department.id"
+                  (click)="changeStatus(department?.id)"
+                  >{{ department.name }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="task-inner-page__details-info-employee d-flex">
+          <div class="d-flex gap-6 width align-items-center padding">
+            <!-- <img
+              class="task-inner-page__details-info-icon"
+              src="/assets/icons/user.svg"
+              alt=""
+            /> -->
+            <div class="titles">თანამშრომელი</div> 
+          </div>
+          <div class="d-flex align-items-center gap-12">
+            <!-- <img src="/assets/icons/task-pic.svg" alt="" /> -->
+            <div class="d-flex flex-column align-self-start">
+              <div class="task-inner-page__details-info-employee-department">
+                {{ task?.employee.department?.name }}
+              </div>
+              <div class="task-inner-page__details-info-employee-name">
+                {{ task?.employee?.name }} {{ task?.employee?.surname }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="task-inner-page__details-info-date d-flex">
+          <div class="d-flex gap-6 width align-items-center padding">
+            <!-- <img
+              class="task-inner-page__details-info-icon"
+              src="/assets/icons/calendar.svg"
+              alt=""
+            /> -->
+            <div class="titles">დავალების ვადა</div>
+          </div>
+          <div class="d-flex align-items-center">
+            ორშ - {{ task?.due_date }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task-inner-page__right">
+    <div class="task-inner-page__right-comments">
+      <textarea
+        class="task-inner-page__right-comments-add"
+        placeholder="დაწერე კომენტარი"
+      ></textarea>
+      <div
+        class="task-inner-page__right-comments-submit d-flex align-items-center justify-content-center cursor-pointer"
+        tabindex="0"
+      >
+        დააკომენტარე
+      </div>
+    </div>
+    <div class="task-inner-page__right-comments-quantity d-flex">
+      <div class="task-inner-page__right-comments-quantity-text">
+        კომენტარები
+      </div>
+      <div
+        class="task-inner-page__right-comments-quantity-number d-flex justify-content-center align-items-center"
+      >
+        {{ task?.comments?.length || 0 }}
+      </div>
+    </div>
+    <div class="test d-flex flex-column">
+      <div
+        *ngFor="let comment of task?.comments"
+        class="task-inner-page__right-comments-feedbacks d-flex flex-column"
+      >
+        <div class="task-inner-page__right-comments-feedback d-flex">
+          <img [src]="comment?.author_avatar" alt="" class="comment-icon" />
+          <div class="d-flex flex-column">
+            <div class="task-inner-page__right-comments-feedback-author">
+              {{ comment?.author_nickname }}
+            </div>
+            <div class="task-inner-page__right-comments-feedback-comment">
+              {{ comment?.text }}
+            </div>
+            <div
+              class="task-inner-page__right-comments-feedback-reply d-flex align-items-center justify-content-center cursor-pointer"
+            >
+              <img
+                class="task-inner-page__right-comments-feedback-reply-icon"
+                src="/assets/icons/arrow-left.svg"
+                alt=""
+              />
+              <div class="task-inner-page__right-comments-feedback-reply-text">
+                უპასუხე
+              </div>
+            </div>
+            <div>
+              <div
+                class="task-inner-page__right-comments-feedback-reply-comment"
+                *ngFor="let subComment of comment?.sub_comments"
+              >
+                <div class="task-inner-page__right-comments-feedback d-flex">
+                  <img
+                    [src]="subComment?.author_avatar"
+                    alt=""
+                    class="comment-icon"
+                  />
+                  <div class="d-flex flex-column">
+                    <div
+                      class="task-inner-page__right-comments-feedback-author"
+                    >
+                      {{ subComment?.author_nickname }}
+                    </div>
+                    <div
+                      class="task-inner-page__right-comments-feedback-comment"
+                    >
+                      {{ subComment?.text }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

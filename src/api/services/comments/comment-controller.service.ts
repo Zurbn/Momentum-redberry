@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { CommentCreateRequest } from 'src/api/models/comment/requests/comment-create-request.model';
+import { Comment } from 'src/api/models/comment/responses/comment.model';
 
 import { environment } from 'src/environment/environment';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MomentumStoreState } from './state';
 import * as MomentumStoreSelectors from './selectors';
 import * as MomentumStoreActions from './actions';
-import { select, Store } from '@ngrx/store';
+import { INIT, select, Store } from '@ngrx/store';
 import { Observable, filter } from 'rxjs';
 import { LoadingState } from 'src/app/core/models/loading-state.model';
 import { EmployeeCreateRequest } from 'src/api/models/employee/requests/employee-create-request.model';
@@ -202,18 +202,19 @@ export class MomentumStoreFacade {
     retry?: boolean
   ): Observable<MomentumStoreState['tasksState']> {
     if (retry) {
-      this.store.dispatch(
-        MomentumStoreActions.RetrieveCommentsByTaskId({ taskId })
-      );
+      this.store.dispatch(MomentumStoreActions.RetrieveTaskById({ taskId }));
     }
 
     return this.selectTasksState$.pipe(
       filter((departmentsState) => {
-        if (departmentsState.loadingState === LoadingState.INIT) {
-          MomentumStoreActions.RetrieveCommentsByTaskId({ taskId });
+        console.log(departmentsState);
+        if (departmentsState.singleCardLoadingState === LoadingState.INIT && departmentsState.loadingState === LoadingState.INIT) {
+          this.store.dispatch(
+            MomentumStoreActions.RetrieveTaskById({ taskId })
+          );
         }
 
-        return departmentsState.loadingState !== LoadingState.INIT;
+        return departmentsState.singleCardLoadingState !== LoadingState.INIT;
       })
     );
   }

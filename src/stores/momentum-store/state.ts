@@ -4,6 +4,7 @@ import { Priority } from 'src/api/models/priority/responses/priority.model';
 import { Department } from 'src/api/models/department/responses/department.model';
 import { Employee } from 'src/api/models/employee/responses/employee.model';
 import { TaskWithComments } from 'src/api/models/task/responses/task.model';
+import { Comment } from 'src/api/models/comment/responses/comment.model';
 
 export const MOMENTUM_STORE_KEY = 'momentum';
 
@@ -36,6 +37,7 @@ export interface MomentumStoreState {
   };
   tasksState: {
     loadingState: LoadingState;
+    singleCardLoadingState: LoadingState;
     createLoadingState: LoadingState;
     updateLoadingState: LoadingState;
     tasks: TaskWithComments[];
@@ -71,6 +73,7 @@ export const initialMomentumState: MomentumStoreState = {
   },
   tasksState: {
     loadingState: LoadingState.INIT,
+    singleCardLoadingState: LoadingState.INIT,
     createLoadingState: LoadingState.INIT,
     updateLoadingState: LoadingState.INIT,
     tasks: null,

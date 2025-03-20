@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { CommentCreateRequest } from 'src/api/models/comment/requests/comment-create-request.model';
+import { Comment } from 'src/api/models/comment/responses/comment.model';
 import { Department } from 'src/api/models/department/responses/department.model';
 import { EmployeeCreateRequest } from 'src/api/models/employee/requests/employee-create-request.model';
 import { Employee } from 'src/api/models/employee/responses/employee.model';
