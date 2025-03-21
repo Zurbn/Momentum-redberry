@@ -11,8 +11,6 @@ import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-requ
 import { MomentumAddEmployeeDialogComponent } from 'src/app/core/components/momentum-add-employee-dialog/momentum-add-employee-dialog.component';
 import { AddATaskFormData } from 'src/app/core/models/add-a-task-form-data.model';
 import { LoadingState } from 'src/app/core/models/loading-state.model';
-import { PriorityEnum } from 'src/app/core/models/priority.enum';
-import { StatusEnum } from 'src/app/core/models/status.enum';
 import { MomentumStoreFacade } from 'src/stores/momentum-store/facade';
 
 @Component({

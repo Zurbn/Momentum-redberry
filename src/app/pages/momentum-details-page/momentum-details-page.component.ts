@@ -53,7 +53,9 @@ export class MomentumDetailsPageComponent {
   }
 
   public changeStatus(id) {
-    console.log(id)
-    this.momentumStoreFacade.updateTask(this.taskId, { status_id: id },true).subscribe();
+    console.log(id);
+    this.momentumStoreFacade
+      .updateTask(this.taskId, { status_id: id }, true)
+      .subscribe();
   }
 }

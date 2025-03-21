@@ -22,6 +22,12 @@ import { MomentumAddEmployeeDialogComponent } from './core/components/momentum-a
 import { MomentumUploadComponentComponent } from './core/components/momentum-upload-component/momentum-upload-component.component';
 import { GetTasksByStatusPipe } from './core/pipes/getTasksByStatus.pipe';
 import { MomentumTaskCardComponent } from './core/components/momentum-task-card/momentum-task-card.component';
+import { DepartmentPipe } from './core/pipes/department-name.pipe';
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localeKa from '@angular/common/locales/ka';
+
+registerLocaleData(localeKa);
 
 @NgModule({
   declarations: [
@@ -49,8 +55,9 @@ import { MomentumTaskCardComponent } from './core/components/momentum-task-card/
     GetPriorityDataPipe,
     FilterEmployeesByDepartmentPipe,
     GetTasksByStatusPipe,
+    DepartmentPipe,
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'ka' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

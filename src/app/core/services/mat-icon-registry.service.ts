@@ -31,6 +31,18 @@ export class MatIconRegistryService {
       name: 'close-circle',
       url: '/assets/icons/close-circle.svg',
     },
+    {
+      name: 'pie-cart',
+      url: '/assets/icons/pie-chart.svg',
+    },
+    {
+      name: 'calendar',
+      url: '/assets/icons/calendar.svg',
+    },
+    {
+      name: 'user-icon',
+      url: '/assets/icons/user-icon.svg',
+    },
   ];
   constructor(
     private iconRegistry: MatIconRegistry,
