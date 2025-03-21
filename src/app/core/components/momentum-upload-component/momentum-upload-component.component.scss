@@ -1,12 +1,13 @@
 @use "/src/styles/typography";
 @use "/src/styles/common";
+@use "/src/styles/constants";
 
 .upload {
   &__container {
     width: 100%;
-    height: 120px;
-    border: 1px dashed #ced4da;
-    border-radius: 8px;
+    height: 7.5rem;
+    border: 0.0625rem dashed constants.$momentum-color-dark-light-1;
+    border-radius: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,15 +16,15 @@
     transition: border-color 0.2s;
   }
   &__image-container {
-    width: 88px;
-    height: 88px;
+    width: 5.5rem;
+    height: 5.5rem;
     position: relative;
   }
   &__image {
     object-fit: cover;
     border-radius: 50%;
-    width: 88px;
-    height: 88px;
+    width: 5.5rem;
+    height: 5.5rem;
   }
   &__remove {
     position: absolute;

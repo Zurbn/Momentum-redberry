@@ -4,6 +4,16 @@
   cursor: pointer;
 }
 
+.disabled {
+  color: #adb5bd !important;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 mat-icon.momentum-icon {
   &--16 {
     width: 1rem;
@@ -23,28 +33,21 @@ mat-icon.momentum-icon {
   }
 }
 
+.state {
+  &--basic {
+    color: constants.$momentum-color-basic;
+  }
+
+  &--invalid {
+    color: constants.$momentum-color-invalid;
+  }
+  &--success {
+    color: constants.$momentum-color-success;
+  }
+}
+
 .gap {
   &--2 {
     gap: 0.125rem;
   }
-}
-.basic {
-  color: #6c757d;
-}
-
-.invalid {
-  color: #fa4d4d;
-}
-.success {
-  color: #08a508;
-}
-
-.ellipsis {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.disabled {
-  color: #adb5bd !important;
 }

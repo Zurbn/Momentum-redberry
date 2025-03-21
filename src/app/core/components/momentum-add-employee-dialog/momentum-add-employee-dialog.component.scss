@@ -2,18 +2,18 @@
 @use "/src/styles/common";
 
 .add-employee {
-  padding: 117px 50px 60px 50px;
+  padding: 7.3125rem 3.125rem 3.75rem 3.125rem;
   position: relative;
   &__department {
-    max-width: 384px;
-    margin-bottom: 42px;
+    max-width: 24rem;
+    margin-bottom: 2.625rem;
   }
   &__close {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     position: absolute;
-    top: 40px;
-    right: 50px;
+    top: 2.5rem;
+    right: 3.125rem;
     transform: translate(50%, -50%);
   }
 }
