@@ -26,6 +26,7 @@ import { DepartmentPipe } from './core/pipes/department-name.pipe';
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeKa from '@angular/common/locales/ka';
+import { GetNumberOfCommentsAndSubCommentsPipe } from './core/pipes/getNumberOfCommentsAndSubComments.pipe';
 
 registerLocaleData(localeKa);
 
@@ -56,7 +57,8 @@ registerLocaleData(localeKa);
     FilterEmployeesByDepartmentPipe,
     GetTasksByStatusPipe,
     DepartmentPipe,
-    FormsModule
+    GetNumberOfCommentsAndSubCommentsPipe,
+    FormsModule,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'ka' }],
   bootstrap: [AppComponent],

@@ -111,7 +111,7 @@
       <div
         class="task-inner-page__right-comments-quantity-number d-flex justify-content-center align-items-center"
       >
-        {{ task?.comments?.length || 0 }}
+        {{ task?.comments | appGetNumberOfCommentsAndSubComments }}
       </div>
     </div>
     <div class="test d-flex flex-column">

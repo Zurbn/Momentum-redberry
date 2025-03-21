@@ -8,7 +8,7 @@ import { MomentumStoreFacade } from 'src/stores/momentum-store/facade';
 })
 export class GetNumberOfCommentsPipe implements PipeTransform {
   constructor(private momentumStoreFacade: MomentumStoreFacade) {}
-  transform(task:Task): unknown {
-    return this.momentumStoreFacade.retrieveCommentsForASpecificTask(task.id)
+  transform(task: Task): unknown {
+    return this.momentumStoreFacade.retrieveCommentsForASpecificTask(task.id);
   }
 }
