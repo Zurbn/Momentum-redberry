@@ -8,8 +8,10 @@
   &__columns {
     gap: 3.25rem;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    @media only screen and (max-width: 1500px) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
     app-momentum-task-column {
       min-width: 23.8125rem;
     }
