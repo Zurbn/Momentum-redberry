@@ -120,7 +120,7 @@ export class MomentumAddANewTaskComponent {
       this.addATaskForm?.get('assignedTo')?.enable();
       return;
     }
-    if (this.addATaskForm?.get('assignedTo').disabled) {
+    if (this.addATaskForm?.get('assignedTo').enabled) {
       this.addATaskForm?.get('assignedTo')?.disable();
     }
   }
