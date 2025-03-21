@@ -106,13 +106,16 @@
         [(ngModel)]="mainCommentContent"
         placeholder="დაწერე კომენტარი"
       ></textarea>
-      <div
+      <button
         class="task-inner-page__right-comments-submit d-flex align-items-center justify-content-center cursor-pointer clickable"
         tabindex="0"
         (click)="submitComment()"
+        mat-button
+        [disableRipple]="true"
+        [disabled]="!mainCommentContent|| mainCommentContent?.trim()?.length == 0"
       >
         დააკომენტარე
-      </div>
+      </button>
     </div>
     <div class="task-inner-page__right-comments-quantity d-flex">
       <div class="task-inner-page__right-comments-quantity-text">
@@ -152,7 +155,7 @@
               >
                 <mat-icon
                   svgIcon="left-arrow"
-                  class="task-inner-page__right-comments-feedback-reply-icon clickable "
+                  class="task-inner-page__right-comments-feedback-reply-icon clickable"
                 ></mat-icon>
                 უპასუხე
               </div>
@@ -167,13 +170,17 @@
                   [(ngModel)]="subCommentContent"
                   placeholder="დაწერე კომენტარი"
                 ></textarea>
-                <div
+
+                <button
                   class="task-inner-page__right-comments-submit d-flex align-items-center justify-content-center cursor-pointer clickable"
                   tabindex="0"
                   (click)="submitSubComment(comment?.id)"
+                  mat-button
+                  [disableRipple]="true"
+                  [disabled]="!subCommentContent || subCommentContent?.trim()?.length == 0"
                 >
                   დააკომენტარე
-                </div>
+                </button>
               </div>
 
               <div
