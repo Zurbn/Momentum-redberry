@@ -298,6 +298,16 @@ export const MomentumStoreReducer = createReducer(
     };
   }),
 
+  on(MomentumStoreActions.ClearExistingTask, (state) => {
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        selectedTask: null,
+      },
+    };
+  }),
+
   on(MomentumStoreActions.RetrieveTaskById, (state) => {
     return {
       ...state,

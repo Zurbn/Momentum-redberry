@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { filter, take, map, combineLatest, catchError, EMPTY } from 'rxjs';
+import { filter, take, map, combineLatest, Subject, takeUntil } from 'rxjs';
 import { Status } from 'src/api/models/status/responses/status.model';
 import {
   Task,
@@ -20,40 +20,38 @@ export class MomentumDetailsPageComponent {
   public mainCommentContent: string;
   public subCommentContent: string;
   public replyingOn: number;
+  public taskId: number;
+
+  private unsubscribe$ = new Subject<void>();
   constructor(
     private momentumStoreFacade: MomentumStoreFacade,
     private activatedRoute: ActivatedRoute
   ) {}
-
-  private get taskId() {
-    return this.activatedRoute?.snapshot?.params?.['id'];
-  }
 
   ngOnInit(): void {
     this.retrieveTaskAndStatus();
   }
 
   private retrieveTaskAndStatus(): void {
+    this.taskId = +this.activatedRoute?.snapshot?.params?.['id'];
     const task$ = this.momentumStoreFacade.retrieveTaskById(this.taskId).pipe(
       filter((taskState) => {
         const isLoaded =
           taskState.loadingState === LoadingState.LOADED ||
           taskState.singleCardLoadingState === LoadingState.LOADED;
+
         const selectedTask =
           taskState?.selectedTask ||
           taskState?.tasks?.find((task) => task?.id == this.taskId);
-        if (selectedTask?.id != this.taskId) {
-          this.momentumStoreFacade.retrieveTaskById(this.taskId);
+
+        if (isLoaded && selectedTask?.id != this.taskId) {
+          this.momentumStoreFacade.retrieveTaskById(this.taskId, true);
           return false;
         }
         return isLoaded;
       }),
+      takeUntil(this.unsubscribe$),
       map((taskState) => {
-        console.log(
-          'aaaaaaaa',
-          taskState?.selectedTask ||
-            taskState?.tasks?.find((task) => task?.id == this.taskId)
-        );
         return (
           taskState?.selectedTask ||
           taskState?.tasks?.find((task) => task?.id == this.taskId)
@@ -61,10 +59,6 @@ export class MomentumDetailsPageComponent {
       })
     );
     const status$ = this.momentumStoreFacade.retrieveStatuses().pipe(
-      catchError((error) => {
-        console.error('Error occurred:', error);
-        return EMPTY; // Prevent further errors from propagating
-      }),
       filter((departmentsState) => {
         if (departmentsState.loadingState === LoadingState.ERROR) {
         }
@@ -75,7 +69,6 @@ export class MomentumDetailsPageComponent {
     );
 
     combineLatest([task$, status$]).subscribe(([task, status]) => {
-      console.log(task, status);
       this.task = task;
       this.statuses = status;
     });
@@ -109,5 +102,11 @@ export class MomentumDetailsPageComponent {
         this.replyingOn = null;
         this.subCommentContent = '';
       });
+  }
+
+  ngOnDestroy(): void {
+    this.momentumStoreFacade.resetSelectedTask();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

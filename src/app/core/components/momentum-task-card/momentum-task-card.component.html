@@ -43,7 +43,9 @@
     <img class="card__image" src="{{ task.employee.avatar }}" alt="avatar" />
     <div class="d-flex">
       <div><img src="/assets/icons/comment-icon.svg" alt="" /></div>
-      <div class="ml-1">{{ task?.comments?.length || 0 }}</div>
+      <div class="ml-1">
+        {{ task?.comments | appGetNumberOfCommentsAndSubComments }}
+      </div>
     </div>
   </div>
 </div>
