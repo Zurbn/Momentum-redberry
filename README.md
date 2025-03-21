@@ -1,27 +1,18 @@
-# RedBerryMomentum
+პროექტში გამოყენებული ტექნოლოგიები:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.11.
+angular
+material-ui
+bootstrap
+ngrx
+rxjs
+sass
 
-## Development server
+მატერიალი გამოვიყენე უბრალოდ ლაიბრარით რომ დეით ფიქერი, მოდალი და ა.შ ხელით არ შემექმნა მაგრამ რადგანაც მატერიალს არ ემთხვეოდა სტილები მომიწია ოვერრაიდების გაწერა material-overrides-ფოლდერში
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+საზიარო სტილები მოდის შეარდ ფაილებიდან რომლებიც მდებარეობენ style-ს ფოლდერში (ცვლადები შექმნილიმაქ მხოლოდ იმ ფერებისთვის რომლებიც 1 ხელ მაინც მეორდებოდენენ)
 
-## Code scaffolding
+api- ფოლდერში მიწერია ყველა ის მოდელი და სერვისი რაც BE თან არის კავშირში და შემდეგ ეს სერვისები სთორში მაქვს გამოყენებული
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+ngrx-ი კი გამოყენებულია სთეით მენეჯმენტისთვის რათა დამატებითი ქოლები ამეცილებინა თავიდან.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+პროექტი დაჰოსტილია - https://momentum-netlify-zurbn.netlify.app/ - ზე
