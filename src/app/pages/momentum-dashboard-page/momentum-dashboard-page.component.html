@@ -33,7 +33,13 @@
       >
         {{ chosenFilter.name }}
       </div>
-      <p *ngIf="chosenFilters?.length" (click)="clearFilters()">გასუფთავება</p>
+      <p
+        *ngIf="chosenFilters?.length"
+        (click)="clearFilters()"
+        class="f-flex align-content-center mb-0"
+      >
+        გასუფთავება
+      </p>
     </div>
   </div>
 
