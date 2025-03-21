@@ -139,6 +139,11 @@ export class MomentumStoreEffects {
           .createNewComment(commentCreateRequest, taskId)
           .pipe(
             map((comment) => {
+              if (comment.parent_id) {
+                return MomentumStoreActions.SubCommentCreated({
+                  subComment: comment,
+                });
+              }
               return MomentumStoreActions.CommentCreated({
                 comment,
               });

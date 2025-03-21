@@ -63,7 +63,7 @@
             <!-- <img src="/assets/icons/task-pic.svg" alt="" /> -->
             <div class="d-flex flex-column align-self-start">
               <div class="task-inner-page__details-info-employee-department">
-                {{ task?.employee.department?.name }}
+                {{ task?.employee?.department?.name }}
               </div>
               <div class="task-inner-page__details-info-employee-name">
                 {{ task?.employee?.name }} {{ task?.employee?.surname }}
@@ -93,11 +93,13 @@
     <div class="task-inner-page__right-comments">
       <textarea
         class="task-inner-page__right-comments-add"
+        [(ngModel)]="mainCommentContent"
         placeholder="დაწერე კომენტარი"
       ></textarea>
       <div
         class="task-inner-page__right-comments-submit d-flex align-items-center justify-content-center cursor-pointer clickable"
         tabindex="0"
+        (click)="submitComment()"
       >
         დააკომენტარე
       </div>
@@ -114,7 +116,7 @@
     </div>
     <div class="test d-flex flex-column">
       <div
-        *ngFor="let comment of task?.comments"
+        *ngFor="let comment of task?.comments; let index = index"
         class="task-inner-page__right-comments-feedbacks d-flex flex-column"
       >
         <div class="task-inner-page__right-comments-feedback d-flex">
@@ -136,11 +138,30 @@
               />
               <div
                 class="task-inner-page__right-comments-feedback-reply-text clickable"
+                (click)="replyingOn = index"
               >
                 უპასუხე
               </div>
             </div>
             <div>
+              <div
+                class="task-inner-page__right-comments mt-3"
+                *ngIf="replyingOn === index"
+              >
+                <textarea
+                  class="task-inner-page__right-comments-add--sub"
+                  [(ngModel)]="subCommentContent"
+                  placeholder="დაწერე კომენტარი"
+                ></textarea>
+                <div
+                  class="task-inner-page__right-comments-submit d-flex align-items-center justify-content-center cursor-pointer clickable"
+                  tabindex="0"
+                  (click)="submitSubComment(comment?.id)"
+                >
+                  დააკომენტარე
+                </div>
+              </div>
+
               <div
                 class="task-inner-page__right-comments-feedback-reply-comment"
                 *ngFor="let subComment of comment?.sub_comments"

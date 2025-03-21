@@ -19,6 +19,9 @@
       position: relative;
       &-add {
         width: 40.6875rem;
+        &--sub {
+          width: 35rem;
+        }
       }
       &-submit {
         width: 9.6875rem;

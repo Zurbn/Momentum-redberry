@@ -116,11 +116,13 @@ export class MomentumAddANewTaskComponent {
 
   private checkAssignedToState() {
     const departmentValue = this.addATaskForm?.get('department')?.value;
-    if (departmentValue) {
+    if (departmentValue && this.addATaskForm?.get('assignedTo').disabled) {
       this.addATaskForm?.get('assignedTo')?.enable();
       return;
     }
-    this.addATaskForm?.get('assignedTo')?.disable();
+    if (this.addATaskForm?.get('assignedTo').disabled) {
+      this.addATaskForm?.get('assignedTo')?.disable();
+    }
   }
 
   private retrieveFormDynamicData(): void {

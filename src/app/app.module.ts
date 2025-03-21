@@ -9,7 +9,7 @@ import { MomentumAddANewTaskComponent } from './pages/momentum-add-a-new-task/mo
 import { MomentumHeaderComponent } from './core/components/momentum-header/momentum-header.component';
 import { MomentumTaskColumnComponent } from './core/components/momentum-task-column/momentum-task-column.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from './modules/material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
@@ -56,6 +56,7 @@ registerLocaleData(localeKa);
     FilterEmployeesByDepartmentPipe,
     GetTasksByStatusPipe,
     DepartmentPipe,
+    FormsModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'ka' }],
   bootstrap: [AppComponent],

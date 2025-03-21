@@ -219,8 +219,42 @@ export const MomentumStoreReducer = createReducer(
         createLoadingState: LoadingState.LOADING,
         comments: [...(state?.commentsState?.comments || []), comment],
       },
+      tasksState: {
+        ...state.tasksState,
+        selectedTask: {
+          ...state.tasksState.selectedTask,
+          comments: [
+            ...(state?.tasksState?.selectedTask?.comments || []),
+            comment,
+          ],
+        },
+      },
     };
   }),
+
+  on(MomentumStoreActions.SubCommentCreated, (state, { subComment }) => {
+    const comments = state?.tasksState.selectedTask?.comments ?? [];
+    const updatedComments = comments.map((comment) => {
+      return comment?.id === subComment?.parent_id
+        ? {
+            ...comment,
+            sub_comments: [...(comment?.sub_comments || []), subComment],
+          }
+        : comment;
+    });
+
+    return {
+      ...state,
+      tasksState: {
+        ...state.tasksState,
+        selectedTask: {
+          ...state.tasksState.selectedTask,
+          comments: updatedComments,
+        },
+      },
+    };
+  }),
+
   on(MomentumStoreActions.ErrorCreatingComment, (state) => {
     return {
       ...state,
@@ -294,7 +328,6 @@ export const MomentumStoreReducer = createReducer(
       },
     };
   }),
-
   on(MomentumStoreActions.CreateTask, (state) => {
     return {
       ...state,

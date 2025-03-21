@@ -8,7 +8,10 @@ import { Priority } from 'src/api/models/priority/responses/priority.model';
 import { Status } from 'src/api/models/status/responses/status.model';
 import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-request.model';
 import { TaskUpdateRequest } from 'src/api/models/task/requests/task-update-request.model';
-import { Task, TaskWithComments } from 'src/api/models/task/responses/task.model';
+import {
+  Task,
+  TaskWithComments,
+} from 'src/api/models/task/responses/task.model';
 
 //! Statuses
 
@@ -113,6 +116,10 @@ export const CommentCreated = createAction(
   '[Momentum] Successfully registered Comment for a task',
   props<{ comment: Comment }>()
 );
+export const SubCommentCreated = createAction(
+  '[Momentum] Successfully registered SubCommentCreated for a task',
+  props<{ subComment: Comment }>()
+);
 
 export const ErrorCreatingComment = createAction(
   '[Momentum] Error registering Comment for a task'
@@ -148,6 +155,10 @@ export const TaskByIdRetrieved = createAction(
 
 export const ErrorRetrievingTaskById = createAction(
   '[Momentum] Error retrieving Task By Id'
+);
+
+export const ClearExistingTask = createAction(
+  '[Momentum] Clear existing task by id'
 );
 
 //! Create

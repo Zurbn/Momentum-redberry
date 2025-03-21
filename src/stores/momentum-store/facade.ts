@@ -195,7 +195,6 @@ export class MomentumStoreFacade {
 
     return this.selectTasksState$.pipe(
       filter((departmentsState) => {
-        console.log(departmentsState);
         if (
           departmentsState.singleCardLoadingState === LoadingState.INIT &&
           departmentsState.loadingState === LoadingState.INIT
@@ -245,5 +244,9 @@ export class MomentumStoreFacade {
         return employeesState.updateLoadingState !== LoadingState.INIT;
       })
     );
+  }
+
+  public resetSelectedTask(): void {
+    this.store.dispatch(MomentumStoreActions.ClearExistingTask());
   }
 }
