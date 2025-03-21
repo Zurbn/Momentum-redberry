@@ -1,7 +1,7 @@
 <div
   class="card"
   [ngStyle]="{ 'border-color': color }"
-  [routerLink]="['/details', task?.id]"
+  (click)="goToDetails(task?.id)"
 >
   <div class="d-flex justify-content-between align-items-center">
     <div class="d-flex card__tags align-items-center">
