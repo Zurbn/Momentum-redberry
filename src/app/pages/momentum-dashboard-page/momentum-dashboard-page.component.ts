@@ -26,6 +26,7 @@ export class MomentumDashboardPageComponent {
   public chosenEmployees = [];
   public chosenFilters = [];
   public latestFilters = [];
+  public isLoading = true;
 
   constructor(
     private momentumStoreFacade: MomentumStoreFacade,
@@ -83,6 +84,7 @@ export class MomentumDashboardPageComponent {
         this.departments = departments;
         this.employees = employees;
         this.loadingService.hideLoadingDialog();
+        this.isLoading = false;
       });
   }
 
@@ -110,12 +112,11 @@ export class MomentumDashboardPageComponent {
     const index = chosenArray.indexOf(
       chosenArray?.find((item) => item?.name == filter?.name)
     );
-    console.log(index);
     if (index > -1) {
       chosenArray.splice(index, 1);
       if (deletingFilter) {
-        const indexInChosenFilters = this.chosenFilters.indexOf(filter);
-        this.chosenFilters.splice(indexInChosenFilters, 1);
+        const indexInChosenFilters = this.chosenFilters?.indexOf(filter);
+        this.chosenFilters?.splice(indexInChosenFilters, 1);
       }
     } else {
       chosenArray.push(filter);
@@ -124,15 +125,15 @@ export class MomentumDashboardPageComponent {
 
   public applyFilters() {
     this.chosenFilters = [
-      ...this.chosenDepartments.map((departments) => ({
+      ...this.chosenDepartments?.map((departments) => ({
         ...departments,
         type: 'department',
       })),
-      ...this.chosenEmployees.map((employee) => ({
+      ...this.chosenEmployees?.map((employee) => ({
         ...employee,
         type: 'employee',
       })),
-      ...this.chosenPriorities.map((priorities) => ({
+      ...this.chosenPriorities?.map((priorities) => ({
         ...priorities,
         type: 'priority',
       })),
