@@ -98,7 +98,6 @@ export class MomentumDetailsPageComponent {
       })
       .pipe(
         filter((x) => {
-          console.log(x)
           return x.createLoadingState === LoadingState.LOADED;
         }),
         take(1)

@@ -71,7 +71,7 @@ export class MomentumAddANewTaskComponent {
     private momentumStoreFacade: MomentumStoreFacade,
     private dialog: MatDialog,
     private router: Router,
-    private loadingService:LoadingService
+    private loadingService: LoadingService
   ) {
     this.loadingService.showLoadingDialog();
     this.initializeForm();
@@ -121,11 +121,11 @@ export class MomentumAddANewTaskComponent {
 
   private checkAssignedToState() {
     const departmentValue = this.addATaskForm?.get('department')?.value;
-    if (departmentValue && this.addATaskForm?.get('assignedTo').disabled) {
+    if (departmentValue && this.addATaskForm?.get('assignedTo')?.disabled) {
       this.addATaskForm?.get('assignedTo')?.enable();
       return;
     }
-    if (this.addATaskForm?.get('assignedTo').enabled) {
+    if (this.addATaskForm?.get('assignedTo')?.enabled && !departmentValue) {
       this.addATaskForm?.get('assignedTo')?.disable();
     }
   }
@@ -160,10 +160,11 @@ export class MomentumAddANewTaskComponent {
       .pipe(
         filter(
           (taskState) => taskState.createLoadingState !== LoadingState.LOADING
-        )
+        ),
+        take(1)
       )
       .subscribe((registrationResponse) => {
-        this.router.navigate(['']);
+        this.router.navigate(['/']);
         localStorage.setItem('addANewTaskData', null);
       });
   }
