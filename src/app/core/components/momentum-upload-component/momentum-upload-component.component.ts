@@ -11,7 +11,12 @@ export class MomentumUploadComponentComponent {
   imageUrl: string | ArrayBuffer | null = null;
   errorMessage: string | null = null;
   readonly MAX_SIZE = 600 * 1024; // 600KB
-  readonly VALID_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif'];
+  readonly VALID_IMAGE_TYPES = [
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'image/svg+xml',
+  ];
 
   triggerFileInput() {
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
@@ -30,7 +35,7 @@ export class MomentumUploadComponentComponent {
       // Check file type
       if (!this.VALID_IMAGE_TYPES.includes(file.type)) {
         this.errorMessage =
-          'Invalid file type. Please select an image (JPG, PNG, GIF)';
+          'Invalid file type. Please select an image (JPG, PNG, GIF,SVG)';
         return;
       }
 
