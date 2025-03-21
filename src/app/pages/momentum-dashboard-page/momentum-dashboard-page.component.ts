@@ -26,6 +26,7 @@ export class MomentumDashboardPageComponent {
   public chosenEmployees = [];
   public chosenFilters = [];
   public latestFilters = [];
+  public isLoading = true;
 
   constructor(
     private momentumStoreFacade: MomentumStoreFacade,
@@ -83,6 +84,7 @@ export class MomentumDashboardPageComponent {
         this.departments = departments;
         this.employees = employees;
         this.loadingService.hideLoadingDialog();
+        this.isLoading = false;
       });
   }
 

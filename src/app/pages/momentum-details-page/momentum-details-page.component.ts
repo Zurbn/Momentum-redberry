@@ -32,6 +32,7 @@ export class MomentumDetailsPageComponent {
     '#FF66A8',
   ];
   public taskId: number;
+  public isLoading = true;
 
   private unsubscribe$ = new Subject<void>();
   constructor(
@@ -85,6 +86,7 @@ export class MomentumDetailsPageComponent {
       this.task = task;
       this.statuses = status;
       this.loadingService.hideLoadingDialog();
+      this.isLoading = false;
     });
   }
 

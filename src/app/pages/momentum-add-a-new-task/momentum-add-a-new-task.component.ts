@@ -21,7 +21,7 @@ import { MomentumStoreFacade } from 'src/stores/momentum-store/facade';
 })
 export class MomentumAddANewTaskComponent {
   public addATaskForm: FormGroup;
-  formValue: AddATaskFormData;
+  public formValue: AddATaskFormData;
 
   public priorities: Priority[];
 
@@ -29,6 +29,8 @@ export class MomentumAddANewTaskComponent {
 
   public departments: Department[];
   public employees: Employee[];
+
+  public isLoading = true;
 
   public readonly VALIDATION_RULES = [
     'მინიმუმ 2 სიმბოლო',
@@ -142,6 +144,7 @@ export class MomentumAddANewTaskComponent {
       this.departments = departments;
       this.employees = employees;
       this.loadingService.hideLoadingDialog();
+      this.isLoading = false;
     });
   }
 
