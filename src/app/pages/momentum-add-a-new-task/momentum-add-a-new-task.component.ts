@@ -109,8 +109,10 @@ export class MomentumAddANewTaskComponent {
 
     this.addATaskForm.valueChanges.subscribe((formValue) => {
       this.formValue = formValue;
-      this.checkAssignedToState();
       localStorage.setItem('addANewTaskData', JSON.stringify(formValue));
+    });
+    this.addATaskForm.get('department').valueChanges.subscribe((value) => {
+      this.checkAssignedToState();
     });
   }
 
