@@ -212,22 +212,25 @@ export const MomentumStoreReducer = createReducer(
     };
   }),
   on(MomentumStoreActions.CommentCreated, (state, { comment }) => {
+    const selectedTask = {
+      ...state.tasksState.selectedTask,
+      comments: [comment, ...(state?.tasksState?.selectedTask?.comments || [])],
+    };
     return {
       ...state,
       commentsState: {
         ...state.commentsState,
-        createLoadingState: LoadingState.LOADING,
+        createLoadingState: LoadingState.LOADED,
         comments: [...(state?.commentsState?.comments || []), comment],
       },
       tasksState: {
         ...state.tasksState,
-        selectedTask: {
-          ...state.tasksState.selectedTask,
-          comments: [
-            comment,
-            ...(state?.tasksState?.selectedTask?.comments || []),
-          ],
-        },
+        selectedTask: selectedTask,
+        tasks: [
+          ...state.tasksState.tasks?.map((task) =>
+            task?.id === selectedTask?.id ? selectedTask : task
+          ),
+        ],
       },
     };
   }),
@@ -245,6 +248,11 @@ export const MomentumStoreReducer = createReducer(
 
     return {
       ...state,
+      commentsState: {
+        ...state.commentsState,
+        createLoadingState: LoadingState.LOADED,
+        comments: updatedComments,
+      },
       tasksState: {
         ...state.tasksState,
         selectedTask: {
@@ -353,7 +361,7 @@ export const MomentumStoreReducer = createReducer(
       tasksState: {
         ...state.tasksState,
         createLoadingState: LoadingState.LOADED,
-        tasks: [...(state?.tasksState?.tasks || []), task],
+        tasks: [...(state?.tasksState?.tasks || []), { ...task, comments: [] }],
       },
     };
   }),

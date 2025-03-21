@@ -1,0 +1,8 @@
+@mixin material-dialog-overrides {
+  .momentum-loader .mat-mdc-dialog-container .mdc-dialog__surface {
+    background-color: transparent;
+    box-shadow: none;
+    color: #8338ec;
+  }
+  
+}

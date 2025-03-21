@@ -16,6 +16,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     MatNativeDateModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -48,6 +50,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule,
     BrowserModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class MaterialModule {}
