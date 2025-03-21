@@ -2,10 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { filter, take, map, combineLatest, Subject, takeUntil } from 'rxjs';
 import { Status } from 'src/api/models/status/responses/status.model';
-import {
-  Task,
-  TaskWithComments,
-} from 'src/api/models/task/responses/task.model';
+import { TaskWithComments } from 'src/api/models/task/responses/task.model';
 import { LoadingState } from 'src/app/core/models/loading-state.model';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { MomentumStoreFacade } from 'src/stores/momentum-store/facade';
@@ -116,7 +113,6 @@ export class MomentumDetailsPageComponent {
       )
       .subscribe((commentSubmitResponse) => {
         this.mainCommentContent = '';
-        console.log(this.mainCommentContent);
         this.loadingService.hideLoadingDialog();
       });
   }
@@ -129,7 +125,7 @@ export class MomentumDetailsPageComponent {
         text: this.subCommentContent,
       })
       .pipe(
-        filter((x) => x.loadingState === LoadingState.LOADED),
+        filter((x) => x.createLoadingState === LoadingState.LOADED),
         take(1)
       )
       .subscribe((commentSubmitResponse) => {
