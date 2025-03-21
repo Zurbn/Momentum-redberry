@@ -3,6 +3,7 @@
 @mixin material-button-overrides {
   .mdc-button,
   .mat-mdc-button:not(:disabled) {
+    --mat-mdc-button-persistent-ripple-color: transparent;
     &.mat-mdc-button.mat-mdc-button-base,
     .mat-mdc-raised-button.mat-mdc-button-base,
     .mat-mdc-unelevated-button.mat-mdc-button-base,

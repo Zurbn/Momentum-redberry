@@ -60,6 +60,7 @@
                 matInput
                 rows="4"
                 formControlName="description"
+
               ></textarea>
             </mat-form-field>
             <div
@@ -185,7 +186,6 @@
                       >დაამატე თანამშრომელი</span
                     >
                   </mat-option>
-                  {{ employees?.length }}
                   <mat-option
                     *ngFor="
                       let employee of employees

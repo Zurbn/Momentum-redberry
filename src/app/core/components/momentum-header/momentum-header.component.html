@@ -8,6 +8,7 @@
       <button
         class="momentum-button momentum-button--secondary momentum-body--1 mr-4 mb-0 clickable"
         mat-button
+        [disableRipple]="true"
         (click)="handleAddEmployeeClick()"
       >
         თანამშრომლის შექმნა
@@ -17,6 +18,7 @@
         routerLink="add-new-task"
         class="momentum-button momentum-button--primary momentum-body--1 clickable ml-3 mb-0"
         mat-button
+        [disableRipple]="true"
       >
         <mat-icon
           svgIcon="momentum-plus"

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MomentumStoreState } from './state';
 import * as MomentumStoreSelectors from './selectors';
 import * as MomentumStoreActions from './actions';
-import { INIT, select, Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable, filter } from 'rxjs';
 import { LoadingState } from 'src/app/core/models/loading-state.model';
 import { EmployeeCreateRequest } from 'src/api/models/employee/requests/employee-create-request.model';
@@ -151,29 +151,17 @@ export class MomentumStoreFacade {
 
   public createComment(
     taskId: number,
-    commentCreateRequest: CommentCreateRequest,
-    retry?: boolean
+    commentCreateRequest: CommentCreateRequest
   ): Observable<MomentumStoreState['commentsState']> {
-    if (retry) {
-      this.store.dispatch(
-        MomentumStoreActions.CreateCommentForASpecificTask({
-          commentCreateRequest,
-          taskId,
-        })
-      );
-    }
+    this.store.dispatch(
+      MomentumStoreActions.CreateCommentForASpecificTask({
+        commentCreateRequest,
+        taskId,
+      })
+    );
 
     return this.selectCommentsState$.pipe(
       filter((employeesState) => {
-        if (employeesState.createLoadingState === LoadingState.INIT) {
-          this.store.dispatch(
-            MomentumStoreActions.CreateCommentForASpecificTask({
-              commentCreateRequest,
-              taskId,
-            })
-          );
-        }
-
         return employeesState.createLoadingState !== LoadingState.INIT;
       })
     );
@@ -208,39 +196,34 @@ export class MomentumStoreFacade {
     return this.selectTasksState$.pipe(
       filter((departmentsState) => {
         console.log(departmentsState);
-        if (departmentsState.singleCardLoadingState === LoadingState.INIT && departmentsState.loadingState === LoadingState.INIT) {
+        if (
+          departmentsState.singleCardLoadingState === LoadingState.INIT &&
+          departmentsState.loadingState === LoadingState.INIT
+        ) {
           this.store.dispatch(
             MomentumStoreActions.RetrieveTaskById({ taskId })
           );
         }
 
-        return departmentsState.singleCardLoadingState !== LoadingState.INIT;
+        return (
+          departmentsState.singleCardLoadingState !== LoadingState.INIT ||
+          departmentsState.loadingState !== LoadingState.INIT
+        );
       })
     );
   }
 
   public createTask(
-    taskCreateRequest: TaskCreateRequest,
-    retry?: boolean
+    taskCreateRequest: TaskCreateRequest
   ): Observable<MomentumStoreState['tasksState']> {
-    if (retry) {
-      this.store.dispatch(
-        MomentumStoreActions.CreateTask({
-          taskCreateRequest,
-        })
-      );
-    }
+    this.store.dispatch(
+      MomentumStoreActions.CreateTask({
+        taskCreateRequest,
+      })
+    );
 
     return this.selectTasksState$.pipe(
       filter((employeesState) => {
-        if (employeesState.createLoadingState === LoadingState.INIT) {
-          this.store.dispatch(
-            MomentumStoreActions.CreateTask({
-              taskCreateRequest,
-            })
-          );
-        }
-
         return employeesState.createLoadingState !== LoadingState.INIT;
       })
     );
@@ -248,29 +231,17 @@ export class MomentumStoreFacade {
 
   public updateTask(
     taskId: number,
-    taskUpdateRequest: TaskUpdateRequest,
-    retry?: boolean
+    taskUpdateRequest: TaskUpdateRequest
   ): Observable<MomentumStoreState['tasksState']> {
-    if (retry) {
-      this.store.dispatch(
-        MomentumStoreActions.UpdateTask({
-          taskId,
-          taskUpdateRequest,
-        })
-      );
-    }
+    this.store.dispatch(
+      MomentumStoreActions.UpdateTask({
+        taskId,
+        taskUpdateRequest,
+      })
+    );
 
     return this.selectTasksState$.pipe(
       filter((employeesState) => {
-        if (employeesState.updateLoadingState === LoadingState.INIT) {
-          this.store.dispatch(
-            MomentumStoreActions.UpdateTask({
-              taskId,
-              taskUpdateRequest,
-            })
-          );
-        }
-
         return employeesState.updateLoadingState !== LoadingState.INIT;
       })
     );

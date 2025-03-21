@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { combineLatest, filter, forkJoin, map, take } from 'rxjs';
+import { combineLatest, filter, map, take } from 'rxjs';
 import { Department } from 'src/api/models/department/responses/department.model';
 import { Employee } from 'src/api/models/employee/responses/employee.model';
 import { Priority } from 'src/api/models/priority/responses/priority.model';
@@ -11,8 +11,6 @@ import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-requ
 import { MomentumAddEmployeeDialogComponent } from 'src/app/core/components/momentum-add-employee-dialog/momentum-add-employee-dialog.component';
 import { AddATaskFormData } from 'src/app/core/models/add-a-task-form-data.model';
 import { LoadingState } from 'src/app/core/models/loading-state.model';
-import { PriorityEnum } from 'src/app/core/models/priority.enum';
-import { StatusEnum } from 'src/app/core/models/status.enum';
 import { MomentumStoreFacade } from 'src/stores/momentum-store/facade';
 
 @Component({
@@ -31,20 +29,13 @@ export class MomentumAddANewTaskComponent {
   public departments: Department[];
   public employees: Employee[];
 
-  private errorRetrievingPriorities = false;
-  private errorRetrievingStatuses = false;
-  private errorRetrievingDepartments = false;
-  private errorRetrievingEmployees = false;
-
   public readonly VALIDATION_RULES = [
     'მინიმუმ 2 სიმბოლო',
     'მაქსიმუმ 256 სიმბოლო',
   ];
+
   public priorities$ = this.momentumStoreFacade.retrievePriorities().pipe(
     filter((prioritiesState) => {
-      if (prioritiesState.loadingState === LoadingState.ERROR) {
-        this.errorRetrievingPriorities = true;
-      }
       return prioritiesState.loadingState === LoadingState.LOADED;
     }),
     take(1),
@@ -53,9 +44,6 @@ export class MomentumAddANewTaskComponent {
 
   public statuses$ = this.momentumStoreFacade.retrieveStatuses().pipe(
     filter((statusesState) => {
-      if (statusesState.loadingState === LoadingState.ERROR) {
-        this.errorRetrievingStatuses = true;
-      }
       return statusesState.loadingState === LoadingState.LOADED;
     }),
     take(1),
@@ -64,9 +52,6 @@ export class MomentumAddANewTaskComponent {
 
   public departments$ = this.momentumStoreFacade.retrieveDepartments().pipe(
     filter((departmentsState) => {
-      if (departmentsState.loadingState === LoadingState.ERROR) {
-        this.errorRetrievingDepartments = true;
-      }
       return departmentsState.loadingState === LoadingState.LOADED;
     }),
     take(1),
@@ -75,9 +60,6 @@ export class MomentumAddANewTaskComponent {
 
   public employees$ = this.momentumStoreFacade.retrieveEmployees().pipe(
     filter((departmentsState) => {
-      if (departmentsState.loadingState === LoadingState.ERROR) {
-        this.errorRetrievingEmployees = true;
-      }
       return departmentsState.loadingState === LoadingState.LOADED;
     }),
     map((departmentsState) => departmentsState.employees)
@@ -123,11 +105,22 @@ export class MomentumAddANewTaskComponent {
       assignedTo: [this.formValue?.assignedTo, Validators.required],
       dueDate: [this.formValue?.dueDate || this.tomorrow, Validators.required],
     });
+    this.checkAssignedToState();
 
     this.addATaskForm.valueChanges.subscribe((formValue) => {
       this.formValue = formValue;
+      this.checkAssignedToState();
       localStorage.setItem('addANewTaskData', JSON.stringify(formValue));
     });
+  }
+
+  private checkAssignedToState() {
+    const departmentValue = this.addATaskForm?.get('department')?.value;
+    if (departmentValue) {
+      this.addATaskForm?.get('assignedTo')?.enable();
+      return;
+    }
+    this.addATaskForm?.get('assignedTo')?.disable();
   }
 
   private retrieveFormDynamicData(): void {
@@ -168,7 +161,7 @@ export class MomentumAddANewTaskComponent {
       });
   }
 
-  addEmployee() {
+  public addEmployee(): void {
     this.dialog.open(MomentumAddEmployeeDialogComponent, {
       panelClass: 'ha-mat-dialog-panel',
       maxWidth: '100%',

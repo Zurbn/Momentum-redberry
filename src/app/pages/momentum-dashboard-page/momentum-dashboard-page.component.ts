@@ -32,8 +32,6 @@ export class MomentumDashboardPageComponent {
     this.retrieveStatusesAndTasks();
   }
 
-  readyToBeFiltered;
-
   private retrieveStatusesAndTasks(): void {
     const statuses$ = this.momentumStoreFacade.retrieveStatuses().pipe(
       filter(
@@ -82,15 +80,13 @@ export class MomentumDashboardPageComponent {
     });
   }
 
-  chooseFilter(
+  public chooseFilter(
     filter: any,
     filterType: 'department' | 'employee' | 'priority',
     deletingFilter?: boolean
   ) {
-    console.log('opaa');
     let chosenArray;
 
-    // Choose the correct array to update based on filterType
     switch (filterType) {
       case 'department':
         chosenArray = this.chosenDepartments;
@@ -105,25 +101,22 @@ export class MomentumDashboardPageComponent {
         throw new Error('Invalid filter type');
     }
 
-    // Add or remove the filter from the chosen array
     const index = chosenArray.indexOf(
       chosenArray?.find((item) => item?.name == filter?.name)
     );
     console.log(index);
     if (index > -1) {
-      // If the filter already exists, remove it (pop it)
       chosenArray.splice(index, 1);
       if (deletingFilter) {
         const indexInChosenFilters = this.chosenFilters.indexOf(filter);
         this.chosenFilters.splice(indexInChosenFilters, 1);
       }
     } else {
-      // If the filter doesn't exist, add it (push it)
       chosenArray.push(filter);
     }
   }
 
-  applyFilters() {
+  public applyFilters() {
     this.chosenFilters = [
       ...this.chosenDepartments.map((departments) => ({
         ...departments,
@@ -139,10 +132,9 @@ export class MomentumDashboardPageComponent {
       })),
     ];
     this.latestFilters = this.chosenFilters;
-    this.readyToBeFiltered = true;
   }
 
-  clearFilters() {
+  public clearFilters() {
     this.chosenFilters = [];
     this.chosenDepartments = [];
     this.chosenEmployees = [];

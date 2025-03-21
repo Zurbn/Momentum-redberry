@@ -1,12 +1,11 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AddATaskFormData } from '../../models/add-a-task-form-data.model';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MomentumStoreFacade } from 'src/stores/momentum-store/facade';
 import { filter, take, map } from 'rxjs';
 import { LoadingState } from '../../models/loading-state.model';
@@ -21,7 +20,6 @@ import { Department } from 'src/api/models/department/responses/department.model
 export class MomentumAddEmployeeDialogComponent {
   public employeeForm: FormGroup;
   public formValue: EmployeeCreateRequest;
-  errorRetrievingDepartments;
   public departments: Department[];
 
   public readonly VALIDATION_RULES = [
@@ -49,9 +47,6 @@ export class MomentumAddEmployeeDialogComponent {
       .retrieveDepartments()
       .pipe(
         filter((departmentsState) => {
-          if (departmentsState.loadingState === LoadingState.ERROR) {
-            this.errorRetrievingDepartments = true;
-          }
           return departmentsState.loadingState === LoadingState.LOADED;
         }),
         take(1),
@@ -93,14 +88,6 @@ export class MomentumAddEmployeeDialogComponent {
     });
   }
 
-  public closeDialog(): void {
-    this.dialogRef.close(false);
-  }
-
-  public confirmAction(): void {
-    this.dialogRef.close(true);
-  }
-
   public addEmployee() {
     this.momentumStoreFacade
       .registerEmployee({
@@ -111,8 +98,15 @@ export class MomentumAddEmployeeDialogComponent {
       })
       .pipe(take(1))
       .subscribe((employee) => {
-        console.log(employee);
         this.closeDialog();
       });
+  }
+
+  public closeDialog(): void {
+    this.dialogRef.close(false);
+  }
+
+  public confirmAction(): void {
+    this.dialogRef.close(true);
   }
 }

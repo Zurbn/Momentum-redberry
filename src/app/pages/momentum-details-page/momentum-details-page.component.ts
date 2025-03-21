@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { filter, take, map } from 'rxjs';
-import { Department } from 'src/api/models/department/responses/department.model';
+import { filter, take, map, combineLatest } from 'rxjs';
+import { Status } from 'src/api/models/status/responses/status.model';
 import {
   Task,
   TaskWithComments,
@@ -15,45 +15,55 @@ import { MomentumStoreFacade } from 'src/stores/momentum-store/facade';
   styleUrls: ['./momentum-details-page.component.scss'],
 })
 export class MomentumDetailsPageComponent {
-  task: TaskWithComments;
-  departments: Department[];
+  public task: TaskWithComments;
+  public statuses: Status[];
   constructor(
     private momentumStoreFacade: MomentumStoreFacade,
     private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void {
-    this.momentumStoreFacade
-      .retrieveTaskById(this.taskId)
-      .subscribe((tasksState) => {
-        console.log(tasksState);
-        this.task =
-          tasksState?.selectedTask ||
-          tasksState?.tasks?.find((task) => task?.id == this.taskId);
-        console.log(this.task);
-      });
-
-    this.momentumStoreFacade
-      .retrieveStatuses()
-      .pipe(
-        filter((departmentsState) => {
-          if (departmentsState.loadingState === LoadingState.ERROR) {
-          }
-          return departmentsState.loadingState === LoadingState.LOADED;
-        }),
-        take(1),
-        map((departmentsState) => departmentsState.statuses)
-      )
-      .subscribe((departments) => {
-        this.departments = departments;
-      });
-  }
   private get taskId() {
     return this.activatedRoute.snapshot.params['id'];
   }
 
-  public changeStatus(id) {
-    console.log(id)
-    this.momentumStoreFacade.updateTask(this.taskId, { status_id: id },true).subscribe();
+  ngOnInit(): void {
+    this.retrieveTaskAndStatus();
+  }
+
+  private retrieveTaskAndStatus(): void {
+    const task$ = this.momentumStoreFacade.retrieveTaskById(this.taskId).pipe(
+      filter(
+        (taskState) =>
+          taskState.loadingState === LoadingState.LOADED ||
+          taskState.singleCardLoadingState === LoadingState.LOADED
+      ),
+      take(1),
+      map(
+        (taskState) =>
+          taskState?.selectedTask ||
+          taskState?.tasks?.find((task) => task?.id == this.taskId)
+      )
+    );
+    const status$ = this.momentumStoreFacade.retrieveStatuses().pipe(
+      filter((departmentsState) => {
+        if (departmentsState.loadingState === LoadingState.ERROR) {
+        }
+        return departmentsState.loadingState === LoadingState.LOADED;
+      }),
+      take(1),
+      map((departmentsState) => departmentsState.statuses)
+    );
+
+    combineLatest([task$, status$]).subscribe(([task, status]) => {
+      console.log(task, status);
+      this.task = task;
+      this.statuses = status;
+    });
+  }
+
+  public changeStatus(id: number) {
+    this.momentumStoreFacade
+      .updateTask(this.taskId, { status_id: id })
+      .subscribe();
   }
 }

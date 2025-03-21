@@ -38,13 +38,6 @@
         }
       }
       &.mat-focused {
-        & .mdc-text-field--focused {
-          .mdc-notched-outline__leading,
-          .mdc-notched-outline__trailing {
-            border-color: rgba(0, 0, 0, 0.38);
-          }
-        }
-
         &.ng-invalid:not(.ng-pristine) {
           .mdc-notched-outline__leading,
           .mdc-notched-outline__trailing {
@@ -64,13 +57,6 @@
       }
 
       &.mat-focused {
-        & .mdc-text-field--focused {
-          .mdc-notched-outline__leading,
-          .mdc-notched-outline__trailing {
-            border-color: rgba(0, 0, 0, 0.38);
-          }
-        }
-
         &.ng-invalid:not(.ng-pristine) {
           .mdc-notched-outline__leading,
           .mdc-notched-outline__trailing {
