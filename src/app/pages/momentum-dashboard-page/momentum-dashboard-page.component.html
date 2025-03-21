@@ -4,6 +4,7 @@
     <div class="dashboard__filters d-flex">
       <button
         mat-button
+        [disableRipple]="true"
         [matMenuTriggerFor]="departmentsMenu"
         (click)="readyToBeFiltered = false"
         class="dashboard__filter d-flex flex-row-reverse momentum-body--1 clickable"
@@ -12,6 +13,7 @@
       </button>
       <button
         mat-button
+        [disableRipple]="true"
         [matMenuTriggerFor]="priorityMenu"
         (click)="readyToBeFiltered = false"
         class="dashboard__filter d-flex flex-row-reverse momentum-body--1 clickable"
@@ -20,6 +22,7 @@
       </button>
       <button
         mat-button
+        [disableRipple]="true"
         [matMenuTriggerFor]="employeeMenu"
         (click)="readyToBeFiltered = false"
         class="dashboard__filter d-flex flex-row-reverse momentum-body--1 clickable"
@@ -30,16 +33,20 @@
 
     <div class="dashboard__chosen-filters position-absolute">
       <div
-        class="dashboard__chosen-filter"
+        class="dashboard__chosen-filter d-flex align-items-center"
         *ngFor="let chosenFilter of chosenFilters"
-        (click)="chooseFilter(chosenFilter, chosenFilter.type, true)"
       >
         {{ chosenFilter.name }}
+        <mat-icon
+          svgIcon="remove-icon"
+          (click)="chooseFilter(chosenFilter, chosenFilter.type, true)"
+          class="momentum-icon momentum-icon--14 d-flex align-items-center clickable"
+        ></mat-icon>
       </div>
       <p
         *ngIf="chosenFilters?.length"
         (click)="clearFilters()"
-        class="f-flex align-content-center mb-0"
+        class="f-flex align-content-center mb-0 mr-2"
       >
         გასუფთავება
       </p>

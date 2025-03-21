@@ -1,5 +1,5 @@
 @use "/src/styles/constants";
-
+@use "/src/styles/common";
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -24,23 +24,49 @@
     height: 44px;
     display: flex;
     align-items: center;
-    border: 1px solid #dee2e6;
-    border-radius: 10px;
-    max-width: fit-content;
   }
   &__filters {
-    gap: 45px;
+    gap: 2.8125rem;
+    border: 0.0625rem solid #dee2e6;
+    border-radius: 10px;
+    max-width: fit-content;
+    padding: 0.75rem 0.625rem;
+    line-height: 100%;
   }
   &__filter {
     width: 200px;
     height: 44px;
+    line-height: 100%;
   }
   &__chosen-filters {
     position: absolute;
     top: 100%;
+    max-width: 100%;
     transform: translateY(50%);
     display: flex;
     gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
   }
   &__chosen-filter {
     display: inline-block;
@@ -48,6 +74,7 @@
     color: #ced4da;
     border: 1px solid #ced4da;
     border-radius: 43px;
+    gap: 0.25rem;
   }
   &__avatar {
     width: 28px;

@@ -43,6 +43,10 @@ export class MatIconRegistryService {
       name: 'user-icon',
       url: '/assets/icons/user-icon.svg',
     },
+    {
+      name: 'remove-icon',
+      url: '/assets/icons/remove-tag.svg',
+    },
   ];
   constructor(
     private iconRegistry: MatIconRegistry,
