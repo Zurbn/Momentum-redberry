@@ -28,6 +28,7 @@ import { registerLocaleData } from '@angular/common';
 import localeKa from '@angular/common/locales/ka';
 import { GetNumberOfCommentsAndSubCommentsPipe } from './core/pipes/getNumberOfCommentsAndSubComments.pipe';
 import { SharedLoadingDialogComponent } from './core/components/shared-loading-dialog/shared-loading-dialog.component';
+import { GetEllipsisAfterHundredLettersPipe } from './core/pipes/getEllipsisAfterHundredLetters.pipe';
 
 registerLocaleData(localeKa);
 
@@ -61,6 +62,7 @@ registerLocaleData(localeKa);
     DepartmentPipe,
     GetNumberOfCommentsAndSubCommentsPipe,
     FormsModule,
+    GetEllipsisAfterHundredLettersPipe,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'ka' }],
   bootstrap: [AppComponent],

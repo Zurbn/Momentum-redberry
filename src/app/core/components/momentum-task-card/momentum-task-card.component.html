@@ -33,12 +33,12 @@
   </div>
   <div class="card__body d-flex flex-column">
     <div class="card__name">{{ task.name }}</div>
-    <div class="card__description ellipsis">
-      {{ task.description }}
+    <div class="card__description">
+      {{ task.description | appGetEllipsisAfterHundredLetters }}
     </div>
   </div>
   <div
-    class="d-flex justify-content-between align-items-center justify-self-end mt-3"
+    class="d-flex justify-content-between align-items-center justify-self-end"
   >
     <img class="card__image" src="{{ task.employee.avatar }}" alt="avatar" />
     <div class="d-flex">

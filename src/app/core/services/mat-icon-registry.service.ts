@@ -47,6 +47,14 @@ export class MatIconRegistryService {
       name: 'remove-icon',
       url: '/assets/icons/remove-tag.svg',
     },
+    {
+      name: 'down-arrow',
+      url: '/assets/icons/down-arrow-filter.svg',
+    },
+    {
+      name: 'left-arrow',
+      url: '/assets/icons/left-arrow.svg',
+    },
   ];
   constructor(
     private iconRegistry: MatIconRegistry,

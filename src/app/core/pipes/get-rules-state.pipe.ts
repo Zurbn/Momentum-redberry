@@ -13,10 +13,10 @@ export class GetRulesStatePipe implements PipeTransform {
       formControl.valid && !formControl.pristine;
 
     const colorStyle = controlHasErrors
-      ? 'invalid'
+      ? 'state--invalid'
       : controlWasTouchedAndValueIsValid
-      ? 'success'
-      : 'basic';
+      ? 'state--success'
+      : 'state--basic';
 
     return colorStyle;
   }

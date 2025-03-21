@@ -4,19 +4,19 @@
 .card {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 1.75rem;
   width: 23.75rem;
-  height: 217px;
+  height: 13.5625rem;
   padding: 1.25rem;
-  border-radius: 15px;
+  border-radius: 0.9375rem;
   &__body {
-    padding-inline: 10px;
+    padding-inline: 0.625rem;
   }
   &__priority {
     width: 5.5rem;
-    height: 26px;
+    height: 1.625rem;
     border-radius: 0.3125rem;
-    border: 1px solid;
+    border: 0.0625rem solid;
     line-height: 150%;
     font-weight: 500;
     font-size: 0.75rem;
@@ -39,6 +39,7 @@
   &__description {
     font-size: 0.875rem;
     color: constants.$momentum-color-dark-secondary;
+    line-height: 100%;
   }
   &__image {
     width: 2rem;
@@ -46,50 +47,3 @@
     border-radius: 50%;
   }
 }
-
-// .card-container {
-//   width: 23.75rem;
-//   gap: 1.75rem;
-//   padding: 1.25rem;
-//   margin-top: 1.875rem;
-//   border-radius: 0.9375rem;
-//   border: 0.0625rem solid #f7bc30;
-// }
-// .task-type {
-//   gap: 0.625rem;
-// }
-// .priority {
-//   width: 5.25rem;
-//   height: 1.5rem;
-//   gap: 0.25rem;
-//   border: 0.0625rem solid #f7bc30;
-//   border-radius: 0.3125rem;
-//   border: 0.0625rem solid;
-//   line-height: 150%;
-//   font-weight: 500;
-//   font-size: 0.75rem;
-//   padding: 0.25rem;
-// }
-// .task-category {
-//   width: 5.5rem;
-//   height: 1.5rem;
-//   white-space: nowrap;
-//   padding: 0.3125rem 1.1563rem;
-//   border-radius: 0.9375rem;
-//   color: #ffffff;
-//   font-size: 0.75rem;
-// }
-// .card-date {
-//   font-size: 0.625rem;
-// }
-// .card-body {
-//   gap: 0.75rem;
-// }
-// .card-name {
-//   font-weight: 600;
-//   color: constants.$momentum-color-dark-primary;
-// }
-// .card-description {
-//   font-size: 0.875rem;
-//   color: constants.$momentum-color-dark-secondary;
-// }

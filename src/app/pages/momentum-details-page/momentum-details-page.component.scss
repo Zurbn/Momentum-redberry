@@ -33,8 +33,12 @@
         padding: 0.5rem 1.125rem;
         right: 1.25rem;
         bottom: 0.9375rem;
+        height: 35px !important;
+        &:disabled{
+          background-color: constants.$momentum-color-primary-focus;
+        }
         &:hover {
-          background-color: constants.$momentum-color-button-focus;
+          background-color: constants.$momentum-color-primary-focus;
         }
       }
 
@@ -76,13 +80,17 @@
           width: fit-content;
           &:hover {
             .task-inner-page__right-comments-feedback-reply-text {
-              color: constants.$momentum-color-button-focus;
+              color: constants.$momentum-color-primary-focus;
             }
           }
           &-text {
             color: #8338ec;
-            font-size: 12px;
+            font-size: 0.75rem;
             line-height: 100%;
+          }
+          &-icon {
+            width: 1rem;
+            height: 1rem;
           }
 
           &-comment {
@@ -122,11 +130,13 @@
       }
       &-employee {
         gap: 4.375rem;
+        position: relative;
         &-department {
-          margin-top: 0.9375rem;
+          top: 10%;
           color: #474747;
           font-size: 0.6875rem;
           line-height: 100%;
+          position: absolute;
         }
         &-name {
           color: #0d0f10;
@@ -135,10 +145,6 @@
       &-date {
         gap: 4.375rem;
       }
-      // &-icon {
-      //   height: 1.5rem;
-      //   width: 1.5rem;
-      // }
     }
   }
 }
@@ -171,24 +177,18 @@ select {
   width: 15.875rem;
   padding: 14px;
 }
-//////// shared ////////
 .padding {
   padding-top: 1.4375rem;
   padding-bottom: 1.4375rem;
 }
-.gap-6 {
-  gap: 0.375rem;
-}
-.gap-12 {
-  gap: 0.75rem;
-}
+
 .width {
   width: 10.25rem;
 }
 .titles {
   color: #474747;
 }
-//////// Delete later /////
+
 textarea {
   resize: none;
   height: 8.4375rem;
@@ -207,9 +207,5 @@ textarea {
 .test {
   overflow-y: auto;
   gap: 2.375rem;
-  // height: fit-content;
   height: 36.25rem;
 }
-// .test:has(:last-child) {
-//   padding-right: 20px;
-// }

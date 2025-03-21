@@ -161,15 +161,18 @@ export class MomentumStoreEffects {
       ofType(MomentumStoreActions.RetrieveTasks),
       switchMap(() =>
         this.taskControllerService.fetchAllTasks().pipe(
-          switchMap((tasks) =>
-            forkJoin(
+          switchMap((tasks) => {
+            if (!tasks.length) {
+              return of([]);
+            }
+            return forkJoin(
               tasks.map((task) =>
                 this.commentControllerService
                   .fetchAllComments(task.id)
                   .pipe(map((comments) => ({ ...task, comments })))
               )
-            )
-          ),
+            );
+          }),
           map((tasksWithComments) =>
             MomentumStoreActions.TasksRetrieved({ tasks: tasksWithComments })
           ),
