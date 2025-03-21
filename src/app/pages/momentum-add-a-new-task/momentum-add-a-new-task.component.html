@@ -60,7 +60,6 @@
                 matInput
                 rows="4"
                 formControlName="description"
-
               ></textarea>
             </mat-form-field>
             <div
@@ -167,7 +166,9 @@
               </mat-form-field>
             </div>
             <div class="add-a-task__assigned-to d-flex flex-column">
-              <mat-label class="add-a-task__label momentum-body--1"
+              <mat-label
+                class="add-a-task__label momentum-body--1"
+                [ngClass]="{ 'disabled': addATaskForm?.get('assignedTo')?.disabled }"
                 >პასუხისმგებელი თანამშრომელი*</mat-label
               >
               <mat-form-field
