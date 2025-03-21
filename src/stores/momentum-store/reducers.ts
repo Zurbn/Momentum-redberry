@@ -224,8 +224,8 @@ export const MomentumStoreReducer = createReducer(
         selectedTask: {
           ...state.tasksState.selectedTask,
           comments: [
-            ...(state?.tasksState?.selectedTask?.comments || []),
             comment,
+            ...(state?.tasksState?.selectedTask?.comments || []),
           ],
         },
       },
@@ -238,7 +238,7 @@ export const MomentumStoreReducer = createReducer(
       return comment?.id === subComment?.parent_id
         ? {
             ...comment,
-            sub_comments: [...(comment?.sub_comments || []), subComment],
+            sub_comments: [subComment, ...(comment?.sub_comments || [])],
           }
         : comment;
     });
