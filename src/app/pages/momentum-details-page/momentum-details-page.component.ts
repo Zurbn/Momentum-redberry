@@ -103,7 +103,7 @@ export class MomentumDetailsPageComponent {
     this.momentumStoreFacade
       .createComment(this.taskId, {
         parent_id: null,
-        text: this.mainCommentContent,
+        text: this.mainCommentContent.trim(),
       })
       .pipe(
         filter((x) => {
@@ -122,7 +122,7 @@ export class MomentumDetailsPageComponent {
     this.momentumStoreFacade
       .createComment(this.taskId, {
         parent_id: parentId,
-        text: this.subCommentContent,
+        text: this.subCommentContent.trim(),
       })
       .pipe(
         filter((x) => x.createLoadingState === LoadingState.LOADED),
