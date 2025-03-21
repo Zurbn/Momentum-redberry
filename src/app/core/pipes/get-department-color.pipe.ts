@@ -6,15 +6,15 @@ import { DepartmentTag } from '../models/department.enum';
   standalone: true,
 })
 export class GetDepartmentColorPipe implements PipeTransform {
-  transform(department: DepartmentTag): string {
+  transform(department: string): string {
     switch (department) {
-      case DepartmentTag.DESIGN:
+      case 'ადამიანური რესურსების დეპარტამენტი':
         return '#ff66a8';
-      case DepartmentTag.LOGISTIC:
+      case 'ლოჯოსტიკის დეპარტამენტი':
         return '#89b6ff';
-      case DepartmentTag.ITTECH:
+      case 'ტექნოლოგიების დეპარტამენტი.':
         return '#ffd86d';
-      case DepartmentTag.MARKETING:
+      case 'გაყიდვები და მარკეტინგის დეპარტამენტი':
         return '#fd9a6a';
       default:
         return 'red';

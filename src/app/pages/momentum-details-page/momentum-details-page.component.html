@@ -1,15 +1,22 @@
 <div class="task-inner-page d-flex">
   <div class="task-inner-page__left d-flex flex-column">
     <div class="task-inner-page__left-type d-flex">
-      <div class="priority d-flex align-items-center justify-content-center">
-        <img
-          src="/assets/icons/middle-icon.svg"
-          alt=""
-          class="priority__icon"
-        />
+      <div
+        class="priority d-flex align-items-center justify-content-center"
+        [ngStyle]="{
+          color: priorityColors[task.priority.id - 1],
+          'border-color': priorityColors[task.priority.id - 1]
+        }"
+      >
+        <img src="{{ task.priority.icon }}" alt="" class="priority__icon" />
         {{ task?.priority?.name }}
       </div>
-      <div class="category d-flex justify-content-center align-items-center">
+      <div
+        class="category d-flex justify-content-center align-items-center"
+        [ngStyle]="{
+          'background-color': departmentColors[task.department.id - 1]
+        }"
+      >
         {{ task?.department?.name | departmentPipe }}
       </div>
     </div>

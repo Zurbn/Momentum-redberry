@@ -20,6 +20,16 @@ export class MomentumDetailsPageComponent {
   public mainCommentContent: string;
   public subCommentContent: string;
   public replyingOn: number;
+  public readonly priorityColors = ['#08A508', '#FFBE0B', '#FA4D4D'];
+  public readonly departmentColors = [
+    '#08A508',
+    '#FFBE0B',
+    '#FA4D4D',
+    '#FD9A6A',
+    '#89B6FF',
+    '#FFD86D',
+    '#FF66A8',
+  ];
   constructor(
     private momentumStoreFacade: MomentumStoreFacade,
     private activatedRoute: ActivatedRoute
