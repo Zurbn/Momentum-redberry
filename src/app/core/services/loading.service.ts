@@ -12,13 +12,11 @@ export class LoadingService {
   constructor(private dialog: MatDialog) {}
 
   public showLoadingDialog(text?: string, dismissDur = 0): Observable<void> {
-    // Only open a new dialog if there isn't one displaying already
     if (!this.loadingDialogRef) {
       this.loadingDialogRef = this.dialog.open(SharedLoadingDialogComponent, {
         panelClass: 'momentum-loader',
         width: '200px',
         height: '200px',
-        
       });
     }
 
