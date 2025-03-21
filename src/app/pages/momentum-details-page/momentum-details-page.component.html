@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading" class="task-inner-page d-flex flex-wrap">
-  <div class="task-inner-page__left d-flex flex-column ">
-    <div class="task-inner-page__left-type d-flex ">
+  <div class="task-inner-page__left d-flex flex-column">
+    <div class="task-inner-page__left-type d-flex">
       <div
         class="priority d-flex align-items-center justify-content-center"
         [ngStyle]="{
@@ -153,6 +153,7 @@
                 class="task-inner-page__right-comments-feedback-reply-text clickable"
                 (click)="replyingOn = index"
               >
+                <mat-icon svgIcon="left-arrow" class="clickable"></mat-icon>
                 უპასუხე
               </div>
             </div>
