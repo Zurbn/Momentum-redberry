@@ -122,11 +122,13 @@
       }
       &-employee {
         gap: 4.375rem;
+        position: relative;
         &-department {
-          margin-top: 0.9375rem;
+          top: 10%;
           color: #474747;
           font-size: 0.6875rem;
           line-height: 100%;
+          position: absolute;
         }
         &-name {
           color: #0d0f10;
@@ -176,12 +178,7 @@ select {
   padding-top: 1.4375rem;
   padding-bottom: 1.4375rem;
 }
-.gap-6 {
-  gap: 0.375rem;
-}
-.gap-12 {
-  gap: 0.75rem;
-}
+
 .width {
   width: 10.25rem;
 }
@@ -210,6 +207,7 @@ textarea {
   // height: fit-content;
   height: 36.25rem;
 }
+
 // .test:has(:last-child) {
 //   padding-right: 20px;
 // }
