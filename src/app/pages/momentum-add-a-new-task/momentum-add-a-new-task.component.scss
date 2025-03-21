@@ -16,7 +16,9 @@
   &__inner-container {
     gap: 10.0625rem;
     margin-bottom: 9.25rem;
-    flex-wrap: wrap;
+    @media only screen and (max-width: 1500px) {
+      flex-wrap: wrap;
+    }
   }
   &__content {
     width: 34.375rem;
@@ -49,7 +51,7 @@
     height: 1.875rem;
     border-radius: 50%;
   }
-  textarea{
+  textarea {
     resize: none;
   }
 }
