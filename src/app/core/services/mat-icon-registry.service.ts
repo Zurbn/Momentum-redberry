@@ -51,6 +51,10 @@ export class MatIconRegistryService {
       name: 'down-arrow',
       url: '/assets/icons/down-arrow-filter.svg',
     },
+    {
+      name: 'left-arrow',
+      url: '/assets/icons/left-arrow.svg',
+    },
   ];
   constructor(
     private iconRegistry: MatIconRegistry,
