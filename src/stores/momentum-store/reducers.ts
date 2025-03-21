@@ -216,6 +216,7 @@ export const MomentumStoreReducer = createReducer(
       ...state.tasksState.selectedTask,
       comments: [comment, ...(state?.tasksState?.selectedTask?.comments || [])],
     };
+    const tasks = state?.tasksState?.tasks || [];
     return {
       ...state,
       commentsState: {
@@ -227,7 +228,7 @@ export const MomentumStoreReducer = createReducer(
         ...state.tasksState,
         selectedTask: selectedTask,
         tasks: [
-          ...state.tasksState.tasks?.map((task) =>
+          ...tasks?.map((task) =>
             task?.id === selectedTask?.id ? selectedTask : task
           ),
         ],
