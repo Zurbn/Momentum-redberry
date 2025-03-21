@@ -27,6 +27,7 @@ import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import localeKa from '@angular/common/locales/ka';
 import { GetNumberOfCommentsAndSubCommentsPipe } from './core/pipes/getNumberOfCommentsAndSubComments.pipe';
+import { SharedLoadingDialogComponent } from './core/components/shared-loading-dialog/shared-loading-dialog.component';
 
 registerLocaleData(localeKa);
 
@@ -41,6 +42,7 @@ registerLocaleData(localeKa);
     MomentumUploadComponentComponent,
     MomentumTaskColumnComponent,
     MomentumTaskCardComponent,
+    SharedLoadingDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,7 @@ import { TaskCreateRequest } from 'src/api/models/task/requests/task-create-requ
 import { MomentumAddEmployeeDialogComponent } from 'src/app/core/components/momentum-add-employee-dialog/momentum-add-employee-dialog.component';
 import { AddATaskFormData } from 'src/app/core/models/add-a-task-form-data.model';
 import { LoadingState } from 'src/app/core/models/loading-state.model';
+import { LoadingService } from 'src/app/core/services/loading.service';
 import { MomentumStoreFacade } from 'src/stores/momentum-store/facade';
 
 @Component({
@@ -69,8 +70,10 @@ export class MomentumAddANewTaskComponent {
     private fb: FormBuilder,
     private momentumStoreFacade: MomentumStoreFacade,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private loadingService:LoadingService
   ) {
+    this.loadingService.showLoadingDialog();
     this.initializeForm();
   }
   get tomorrow(): string {
@@ -138,12 +141,12 @@ export class MomentumAddANewTaskComponent {
       this.statuses = statuses;
       this.departments = departments;
       this.employees = employees;
-      console.log(employees);
+      this.loadingService.hideLoadingDialog();
     });
   }
 
   public handleSubmit(): void {
-    console.log(this.formValue);
+    this.loadingService.showLoadingDialog();
     const taskCreateRequest: TaskCreateRequest = {
       name: this.formValue?.title,
       description: this.formValue.description,

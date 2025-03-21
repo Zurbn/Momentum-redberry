@@ -9,6 +9,7 @@
 @import "button";
 @import "menu";
 @import "checkbox";
+@import "dialog";
 
 @mixin material-component-overrides() {
   @include material-form-field-overrides;
@@ -16,4 +17,5 @@
   @include material-button-overrides;
   @include material-menu-overrides;
   @include material-checkbox-overrides;
+  @include material-dialog-overrides;
 }
